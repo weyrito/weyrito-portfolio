@@ -152,8 +152,6 @@
   ],
   "terminal": {
     "files": {
-      "README.md": "Portfolio de Thomas Fouquet - Étudiant en cybersécurité\nTapez \"help\" pour voir les commandes disponibles.",
-      "cv.txt": "Thomas Fouquet\nÉtudiant en bachelor informatique\nSpécialisation: Cybersécurité\nEmail: alternance@thomas-fouquet.fr\nTél: 06 72 63 54 51"
-    }
+      "README.md": "Portfolio de Thomas Fouquet - Étudiant en cybersécurité\nTapez \"help\" pour voir les commandes disponibles."    }
   }
 }

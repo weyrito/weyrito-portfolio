@@ -40,9 +40,7 @@ class Terminal {
     async initFiles() {
         if (portfolioData && portfolioData.terminal && portfolioData.terminal.files) {
             this.files = {
-                'README.md': portfolioData.terminal.files['README.md'],
-                'cv.txt': portfolioData.terminal.files['cv.txt'],
-                'projects.json': JSON.stringify(portfolioData.terminal.files['projects.json'], null, 2)
+                'README.md': portfolioData.terminal.files['README.md']
             };
         }
     }
@@ -172,7 +170,6 @@ class Terminal {
         this.addOutput(`
 ╔══════════════════════════════════════════════════════════════╗
 ║                    THOMAS FOUQUET TERMINAL                   ║
-║                 Cybersecurity Student Portal                 ║
 ╚══════════════════════════════════════════════════════════════╝
 
 Bienvenue dans mon portfolio interactif !
