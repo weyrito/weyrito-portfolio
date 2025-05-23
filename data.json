@@ -12,11 +12,8 @@
     "cybersecurity": {
       "title": "Cybersécurité",
       "items": [
-        "Tests de pénétration (Kali Linux, Metasploit)",
         "Analyse de vulnérabilités (Nmap, Wireshark)",
-        "Cryptographie et chiffrement",
-        "Sécurité réseau et firewall",
-        "Forensique numérique"
+        "Sécurité réseau et firewall"
       ]
     },
     "systems": {
@@ -146,7 +143,7 @@
     },
     {
       "language": "Espagnol",
-      "level": "Bilingue"
+      "level": "Professionnel"
     }
   ],
   "interests": [
@@ -156,12 +153,7 @@
   "terminal": {
     "files": {
       "README.md": "Portfolio de Thomas Fouquet - Étudiant en cybersécurité\nTapez \"help\" pour voir les commandes disponibles.",
-      "cv.txt": "Thomas Fouquet\nÉtudiant en bachelor informatique\nSpécialisation: Cybersécurité\nEmail: alternance@thomas-fouquet.fr\nTél: 06 72 63 54 51",
-      "projects.json": {
-        "fighting-beat": "Site web du club de MMA",
-        "tamagotchi-drive": "Projet IoT en C++",
-        "straweb": "Site e-commerce avec React"
-      }
+      "cv.txt": "Thomas Fouquet\nÉtudiant en bachelor informatique\nSpécialisation: Cybersécurité\nEmail: alternance@thomas-fouquet.fr\nTél: 06 72 63 54 51"
     }
   }
 }
