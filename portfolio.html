@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title id="page-title">Portfolio - Chargement...</title>
+    <link rel="stylesheet" href="style.css"> 
+    <meta name="description" id="page-description" content="Portfolio - Chargement...">
+</head>
+<body>
+    <header id="header-container">
+        <!-- Contenu généré dynamiquement -->
+    </header>
+
+    <!-- Interface Terminal -->
+    <div id="terminal-container" class="terminal-container hidden">
+        <div class="terminal-header">
+            <div class="terminal-controls">
+                <span class="terminal-dot red"></span>
+                <span class="terminal-dot yellow"></span>
+                <span class="terminal-dot green"></span>
+            </div>
+            <div class="terminal-title">thomas@portfolio: ~</div>
+            <button id="close-terminal" class="close-terminal">✕</button>
+        </div>
+        <div class="terminal-body">
+            <div id="terminal-output" class="terminal-output"></div>
+        </div>
+    </div>
+
+    <!-- Portfolio traditionnel -->
+    <main class="container" id="portfolio-content">
+        <!-- Toutes les sections seront générées dynamiquement -->
+    </main>
+
+    <footer id="portfolio-footer">
+        <!-- Contenu généré dynamiquement -->
+    </footer>
+
+    <script src="data-loader.js"></script>
+    <script src="terminal.js"></script>
+    <script>
+        // Attendre que le DOM soit chargé
+        document.addEventListener('DOMContentLoaded', () => {
+            // Charger et initialiser tout le portfolio
+            initializePortfolio();
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,167 @@
+{
+  "personal": {
+    "name": "Thomas Fouquet",
+    "title": "Étudiant en bachelor informatique - Spécialisation Cybersécurité",
+    "email": "alternance@thomas-fouquet.fr",
+    "phone": "06 72 63 54 51",
+    "location": "Région Grand-Est",
+    "status": "En recherche d'alternance",
+    "about": "Étudiant passionné en informatique avec une spécialisation en cybersécurité. Je m'intéresse particulièrement à la sécurité des systèmes, l'analyse de vulnérabilités, et la protection des infrastructures numériques. Mon objectif est de contribuer à renforcer la sécurité informatique dans un monde de plus en plus connecté."
+  },
+  "skills": {
+    "cybersecurity": {
+      "title": "Cybersécurité",
+      "items": [
+        "Tests de pénétration (Kali Linux, Metasploit)",
+        "Analyse de vulnérabilités (Nmap, Wireshark)",
+        "Cryptographie et chiffrement",
+        "Sécurité réseau et firewall",
+        "Forensique numérique"
+      ]
+    },
+    "systems": {
+      "title": "Systèmes & Réseaux",
+      "items": [
+        "Administration Linux",
+        "Configuration réseau (TCP/IP, VPN)",
+        "Virtualisation (VirtualBox, Proxmox, Docker)"
+      ]
+    },
+    "web": {
+      "title": "Développement web",
+      "items": [
+        "JavaScript/TypeScript - React, Next.js",
+        "Framework CSS - Tailwind, Bootstrap"
+      ]
+    },
+    "database": {
+      "title": "Bases de données",
+      "items": [
+        "MySQL, PostgreSQL",
+        "Conception et administration de bases de données"
+      ]
+    },
+    "languages": {
+      "title": "Autres langages",
+      "items": [
+        "Python (automatisation, scripts de sécurité)",
+        "C/C++ (programmation système, IoT)",
+        "PHP (Symfony, développement web)",
+        "Bash/Shell scripting"
+      ]
+    },
+    "soft": {
+      "title": "Soft skills",
+      "items": [
+        "Travail d'équipe",
+        "Communication",
+        "Autonomie",
+        "Résolution de problèmes",
+        "Adaptabilité",
+        "Organisation"
+      ]
+    }
+  },
+  "projects": [
+    {
+      "title": "Fighting Beat - Site web du club de MMA",
+      "type": "Application WEB",
+      "description": "Dans le cadre d'un projet associatif, j'ai développé le site web du club de MMA Fighting Beat.",
+      "technologies": ["PHP", "Stripe API", "Bootstrap"],
+      "features": [
+        "Intégration de système de paiement en ligne",
+        "Interface responsive et moderne"
+      ],
+      "url": "https://fightingbeat.fr"
+    },
+    {
+      "title": "Tamagotchi Drive",
+      "type": "Projet IoT",
+      "description": "Tamagotchi Drive est un projet de Tamagotchi développé en C++. Il est possible de conduire sa voiture et de participer à une course contre la montre pour gagner de l'argent afin laver sa voiture et d'acheter de l'essence.",
+      "technologies": ["Arduino", "C/C++", "ESP32"],
+      "features": [
+        "Conception de circuits électroniques (soudures, câblages)",
+        "Programmation embarquée"
+      ]
+    },
+    {
+      "title": "Straweb - Site e-commerce",
+      "type": "Application WEB",
+      "description": "Straway est une startup dont l'ambition est de végétaliser les foyers à travers la vente de plantes d'intérieur. J'ai participé au développement du site web de l'entreprise.",
+      "technologies": ["React.js", "Next.js", "Tailwind CSS", "Stripe API", "Firebase Auth", "PostgreSQL"],
+      "features": [
+        "Système d'authentification utilisateur",
+        "Intégration paiement en ligne"
+      ],
+      "url": "https://www.straway.fr"
+    }
+  ],
+  "experience": [
+      {
+          "title": "Job étudiant - Biocoop",
+          "period": "Août 2024 - Aujourd'hui",
+          "location": "Versailles",
+          "highlights": [
+            "Responsable de la fermeture du magasin (comptage des caisses, nettoyage, rangement)",
+            "Aide à la clientèle (conseils, informations sur les produits)",
+            "Réception et mise en rayon des produits"          ]
+        },
+    {
+      "title": "Échange culturel au Mexique avec le Rotary Normandie",
+      "period": "Août 2022 - Juin 2023",
+      "location": "Ciudad del Carmen, Campeche",
+      "highlights": [
+        "Immersion culturelle complète d'une année",
+        "Perfectionnement de l'espagnol",
+        "Développement de l'adaptabilité et de l'autonomie"
+      ]
+    }
+  ],
+  "education": [
+    {
+      "title": "Bachelor informatique",
+      "period": "2023 - 2025",
+      "institution": "École Hexagone",
+      "specialization": "Cybersécurité"
+    },
+    {
+      "title": "Lycée général",
+      "period": "2019 - 2022",
+      "subjects": [
+        "Mathématiques + Maths expertes",
+        "Physique - Chimie",
+        "Sciences de l'ingénieur",
+        "Classe européenne (anglais)"
+      ]
+    }
+  ],
+  "languages": [
+    {
+      "language": "Français",
+      "level": "Natif"
+    },
+    {
+      "language": "Anglais",
+      "level": "Professionnel"
+    },
+    {
+      "language": "Espagnol",
+      "level": "Bilingue"
+    }
+  ],
+  "interests": [
+    "Sports de combat, plusieurs combats dans diverses disciplines (MMA, boxe anglaise, jiu-jitsu brésilien)",
+    "Course à pied (Semi-marathon: 1h41min, 10km: 42min)"
+  ],
+  "terminal": {
+    "files": {
+      "README.md": "Portfolio de Thomas Fouquet - Étudiant en cybersécurité\nTapez \"help\" pour voir les commandes disponibles.",
+      "cv.txt": "Thomas Fouquet\nÉtudiant en bachelor informatique\nSpécialisation: Cybersécurité\nEmail: alternance@thomas-fouquet.fr\nTél: 06 72 63 54 51",
+      "projects.json": {
+        "fighting-beat": "Site web du club de MMA",
+        "tamagotchi-drive": "Projet IoT en C++",
+        "straweb": "Site e-commerce avec React"
+      }
+    }
+  }
+}
