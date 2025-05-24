@@ -1,4 +1,3 @@
-
 # Thomas Fouquet - Portfolio
 
   
@@ -75,22 +74,16 @@ git  clone https://github.com/weyrito/weyrito-portfolio.git
 
 ## 📁 Project structure
 
-  
-
 ```
-
-├── index.html # Main page
-
-├── style.css # CSS styles
-
-├── data.json # Portfolio data
-
-├── data-loader.js # Data loading
-
-├── terminal.js # Terminal logic
-
-└── README.md # Documentation
-
+├── index.html          # Main page
+├── style.css           # CSS styles and animations
+├── data.json           # Portfolio data (personal info, skills, projects)
+├── CNAME              # Domain configuration
+├── README.md          # Documentation
+└── js/
+    ├── portfolio.js   # Main portfolio logic and rendering
+    ├── terminal.js    # Interactive terminal functionality
+    └── utils.js       # Utility functions (DOM, Template)
 ```
 
   
