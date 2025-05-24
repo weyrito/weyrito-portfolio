@@ -1,5 +1,5 @@
 
-# Thomas Fouquet Portfolio
+# Thomas Fouquet - Portfolio
 
   
 
@@ -51,7 +51,7 @@ Personal portfolio showcasing my skills, projects and experiences in cybersecuri
 
   
 
-**Tech Stack Philosophy:** The technology stack is intentionally kept simple and lightweight, focusing on vanilla web technologies without frameworks or complex dependencies. This approach ensures fast loading times, easy maintenance, and demonstrates proficiency with core web technologies.
+**Tech stack philosophy:** The technology stack is intentionally kept simple and lightweight, focusing on vanilla web technologies without frameworks or complex dependencies. This approach ensures fast loading times, easy maintenance, and demonstrates proficiency with core web technologies.
 
   
 

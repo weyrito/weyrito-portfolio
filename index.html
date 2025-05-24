@@ -63,12 +63,11 @@
         <!-- Contenu généré dynamiquement -->
     </footer>
 
-    <script src="data-loader.js"></script>
-    <script src="terminal.js"></script>
-    <script>
-        // Attendre que le DOM soit chargé
+    <script src="js/terminal.js"></script>
+    <script type="module">
+        import { initializePortfolio } from './js/portfolio.js';
+        
         document.addEventListener('DOMContentLoaded', () => {
-            // Charger et initialiser tout le portfolio
             initializePortfolio();
         });
     </script>
