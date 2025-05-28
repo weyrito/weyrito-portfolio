@@ -7,7 +7,7 @@ const TEMPLATES = {
     header: `
         <h1 id="name">{{personal.name}}</h1>
         <h2 id="title">{{personal.title}}</h2>
-        <p><strong>Email:</strong> <span id="email">{{personal.email}}</span> | <strong>Téléphone:</strong> <span id="phone">{{personal.phone}}</span></p>
+        <p><strong>Email:</strong> <a href="mailto:{{personal.email}}" target="_blank" id="email">{{personal.email}}</a> | <strong>Téléphone:</strong> <span id="phone">{{personal.phone}}</span></p>
         <div class="terminal-toggle">
             <button id="toggle-terminal" class="terminal-btn">
                 <span class="terminal-icon">></span> Mode Terminal

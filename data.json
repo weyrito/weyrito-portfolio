@@ -32,7 +32,11 @@
           "text": "JavaScript/TypeScript - React, Next.js",
           "url": "https://www.straway.fr"
         },
-        "Framework CSS - Tailwind, Bootstrap"
+        "Framework CSS - Tailwind, Bootstrap",
+        "PHP - Symfony",
+        "API RESTful",
+        "Stripe API (paiement en ligne)",
+        "Backend SASS (Firebase et Supabase"
       ]
     },
     "database": {
@@ -47,10 +51,6 @@
       "items": [
         "Python (automatisation, scripts de sécurité)",
         "C/C++ (programmation système, IoT)",
-        {
-          "text": "PHP (Symfony, développement web)",
-          "url": "https://fightingbeat.fr"
-        },
         "Bash/Shell scripting"
       ]
     },

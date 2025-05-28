@@ -120,6 +120,18 @@ header p {
     font-size: 0.9rem;
 }
 
+/* Email link styling reset */
+header a[href^="mailto:"] {
+    color: var(--text-white);
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+header a[href^="mailto:"]:hover {
+    color: var(--primary-green);
+    text-decoration: underline;
+}
+
 /* Container */
 .container {
     max-width: 1200px;
