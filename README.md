@@ -70,8 +70,6 @@ git  clone https://github.com/weyrito/weyrito-portfolio.git
 
 ```
 
-  
-
 2. Open `index.html` in a web browser
 
   
@@ -89,6 +87,7 @@ git  clone https://github.com/weyrito/weyrito-portfolio.git
 │   └── utils.js           # Utility functions (DOM, Template helpers)
 ├── assets/
 │   └── thomas-fouquet-cv.pdf  # CV file for download
+├── LICENSE                # MIT License
 ├── CNAME                  # Domain configuration
 └── README.md              # Documentation
 ```
@@ -115,7 +114,7 @@ The application follows a modular architecture:
 
   
 
-## 🖥️ Terminal Commands
+## 🖥️ Terminal commands
 
   
 
@@ -151,6 +150,32 @@ The interactive terminal supports various commands:
 
   
 
+## 📄 License
+
+  
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+  
+
+You are free to:
+
+  
+
+- ✅ Use this code for personal or commercial projects
+
+- ✅ Modify and adapt the code to your needs
+
+- ✅ Distribute copies of the code
+
+- ✅ Include the code in larger projects
+
+  
+
+Just remember to include the original copyright notice and license in any copies or substantial portions of the software.
+
+  
+
 ## 👨‍💻 Author
 
   
@@ -165,4 +190,4 @@ The interactive terminal supports various commands:
 
   
 
-**Last updated:** May 28th, 2025
+**Last updated:** January 25, 2025

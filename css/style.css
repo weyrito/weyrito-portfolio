@@ -43,8 +43,8 @@ body::before {
     width: 100%;
     height: 100%;
     background: radial-gradient(circle at 20% 20%, rgba(0, 255, 65, 0.05) 0%, transparent 50%),
-                radial-gradient(circle at 80% 80%, rgba(139, 92, 246, 0.05) 0%, transparent 50%),
-                radial-gradient(circle at 40% 60%, rgba(6, 182, 212, 0.03) 0%, transparent 50%);
+        radial-gradient(circle at 80% 80%, rgba(139, 92, 246, 0.05) 0%, transparent 50%),
+        radial-gradient(circle at 40% 60%, rgba(6, 182, 212, 0.03) 0%, transparent 50%);
     z-index: -2;
     animation: matrixPulse 8s ease-in-out infinite alternate;
 }
@@ -57,13 +57,11 @@ body::after {
     left: 0;
     width: 100%;
     height: 100%;
-    background: repeating-linear-gradient(
-        0deg,
-        transparent,
-        transparent 2px,
-        rgba(0, 255, 65, 0.03) 2px,
-        rgba(0, 255, 65, 0.03) 4px
-    );
+    background: repeating-linear-gradient(0deg,
+            transparent,
+            transparent 2px,
+            rgba(0, 255, 65, 0.03) 2px,
+            rgba(0, 255, 65, 0.03) 4px);
     z-index: -1;
     pointer-events: none;
 }
@@ -192,8 +190,15 @@ header a[href^="mailto:"]:hover {
 }
 
 @keyframes pulse {
-    0%, 100% { transform: scale(1); }
-    50% { transform: scale(1.1); }
+
+    0%,
+    100% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.1);
+    }
 }
 
 /* Container */
@@ -501,9 +506,17 @@ li:hover {
     border-radius: 50%;
 }
 
-.terminal-dot.red { background: var(--danger-red); }
-.terminal-dot.yellow { background: var(--warning-orange); }
-.terminal-dot.green { background: var(--primary-green); }
+.terminal-dot.red {
+    background: var(--danger-red);
+}
+
+.terminal-dot.yellow {
+    background: var(--warning-orange);
+}
+
+.terminal-dot.green {
+    background: var(--primary-green);
+}
 
 .terminal-title {
     color: var(--text-gray);
@@ -623,19 +636,22 @@ li:hover {
 }
 
 .matrix-active::after {
-    background: repeating-linear-gradient(
-        0deg,
-        transparent,
-        transparent 1px,
-        rgba(0, 255, 65, 0.1) 1px,
-        rgba(0, 255, 65, 0.1) 2px
-    ) !important;
+    background: repeating-linear-gradient(0deg,
+            transparent,
+            transparent 1px,
+            rgba(0, 255, 65, 0.1) 1px,
+            rgba(0, 255, 65, 0.1) 2px) !important;
     animation: scanLinesFast 0.1s linear infinite !important;
 }
 
 @keyframes scanLinesFast {
-    0% { transform: translateY(0); }
-    100% { transform: translateY(4px); }
+    0% {
+        transform: translateY(0);
+    }
+
+    100% {
+        transform: translateY(4px);
+    }
 }
 
 /* Terminal Scrollbar */
@@ -687,39 +703,70 @@ hr {
 
 /* Animations */
 @keyframes matrixPulse {
-    0% { opacity: 0.03; }
-    100% { opacity: 0.08; }
+    0% {
+        opacity: 0.03;
+    }
+
+    100% {
+        opacity: 0.08;
+    }
 }
 
 @keyframes scanLine {
-    0% { transform: translateX(-150%); }
-    100% { transform: translateX(50%); }
+    0% {
+        transform: translateX(-150%);
+    }
+
+    100% {
+        transform: translateX(50%);
+    }
 }
 
 @keyframes glitch {
-    0%, 98% { 
+
+    0%,
+    98% {
         text-shadow: 0 0 20px var(--primary-green);
         transform: translate(0);
     }
-    99% { 
+
+    99% {
         text-shadow: 2px 0 var(--danger-red), -2px 0 var(--info-blue);
         transform: translate(2px, 0);
     }
 }
 
 @keyframes blink {
-    0%, 50% { opacity: 1; }
-    51%, 100% { opacity: 0; }
+
+    0%,
+    50% {
+        opacity: 1;
+    }
+
+    51%,
+    100% {
+        opacity: 0;
+    }
 }
 
 @keyframes scanProject {
-    0% { left: -100%; }
-    100% { left: 100%; }
+    0% {
+        left: -100%;
+    }
+
+    100% {
+        left: 100%;
+    }
 }
 
 @keyframes typewriter {
-    from { width: 0; }
-    to { width: 100%; }
+    from {
+        width: 0;
+    }
+
+    to {
+        width: 100%;
+    }
 }
 
 /* Responsive Design */
@@ -727,21 +774,21 @@ hr {
     header {
         padding: 2rem 1rem;
     }
-    
+
     section {
         margin: 2rem 1rem;
         padding: 1.5rem;
     }
-    
+
     .skills-grid {
         grid-template-columns: 1fr;
         gap: 1rem;
     }
-    
+
     h3 {
         font-size: 1.5rem;
     }
-    
+
     .project-card {
         padding: 1.5rem;
     }
@@ -749,34 +796,34 @@ hr {
     .terminal-header {
         padding: 0.6rem;
     }
-    
+
     .terminal-body {
         padding: 0.8rem;
     }
-    
+
     .terminal-output {
         font-size: 0.8rem;
         line-height: 1.3;
     }
-    
+
     .terminal-input {
         font-size: 0.8rem;
     }
-    
+
     .terminal-prompt {
         font-size: 0.8rem;
     }
-    
+
     .terminal-btn {
         padding: 0.6rem 1.5rem;
         font-size: 0.9rem;
     }
-    
+
     .header-actions {
         flex-direction: column;
         gap: 0.8rem;
     }
-    
+
     .cv-download-btn {
         padding: 0.6rem 1.5rem;
         font-size: 0.9rem;
@@ -787,40 +834,40 @@ hr {
     header h1 {
         font-size: 2rem;
     }
-    
+
     header h2 {
         font-size: 1rem;
     }
-    
+
     section {
         margin: 1rem 0.5rem;
         padding: 1rem;
     }
-    
+
     .terminal-body {
         padding: 0.5rem;
     }
-    
+
     .terminal-output {
         font-size: 0.7rem;
         line-height: 1.2;
     }
-    
+
     .terminal-input {
         font-size: 0.7rem;
     }
-    
+
     .terminal-prompt {
         font-size: 0.7rem;
         margin-right: 0.3rem;
     }
-    
+
     .terminal-output .welcome {
         padding: 0.5rem;
         margin: 0.5rem 0;
         font-size: 0.7rem;
     }
-    
+
     .cv-download-btn {
         padding: 0.5rem 1rem;
         font-size: 0.8rem;
@@ -829,7 +876,10 @@ hr {
 
 /* Accessibility */
 @media (prefers-reduced-motion: reduce) {
-    *, *::before, *::after {
+
+    *,
+    *::before,
+    *::after {
         animation-duration: 0.01ms !important;
         animation-iteration-count: 1 !important;
         transition-duration: 0.01ms !important;

@@ -16,11 +16,15 @@ const TEMPLATES = {
                 <span class="terminal-icon">></span> Mode Terminal
             </button>
         </div>`,
-    
+
     footer: `
         <hr>
         <p><strong>{{personal.status}} dans la {{personal.location}}</strong></p>
-        <p>Portfolio mis à jour en mai 2025</p>`
+        <p>Portfolio mis à jour en mai 2025</p>
+        <p style="margin-top: 1rem; font-size: 0.8em; color: var(--text-gray);">
+            📄 Ce projet est sous <a href="https://github.com/weyrito/weyrito-portfolio/blob/main/LICENSE" target="_blank" style="color: var(--neon-cyan);">licence MIT</a> - 
+            Code source libre et réutilisable
+        </p>`
 };
 
 const SECTIONS = [
@@ -88,7 +92,7 @@ const SECTIONS = [
                         institutionHtml = edu.institution.text;
                     }
                 }
-                
+
                 return `
                     <div>
                         <h4>${edu.title}</h4>
@@ -104,7 +108,7 @@ const SECTIONS = [
         id: 'languages',
         title: 'Langues',
         render: (data) => {
-            const langHtml = data.languages.map(lang => 
+            const langHtml = data.languages.map(lang =>
                 `<li><strong>${lang.language}:</strong> ${lang.level}</li>`
             ).join('');
             return `<ul id="languages-list">${langHtml}</ul>`;
@@ -136,7 +140,7 @@ function updatePageMeta() {
     const { personal } = portfolioData;
     document.title = `Portfolio - ${personal.name}`;
     DOM.select('#page-title').textContent = `Portfolio - ${personal.name}`;
-    DOM.select('#page-description').setAttribute('content', 
+    DOM.select('#page-description').setAttribute('content',
         `Portfolio de ${personal.name} - ${personal.title}`);
 }
 
@@ -151,11 +155,11 @@ function renderSection(section, data) {
 function renderPortfolio() {
     // Header
     DOM.render('header-container', Template.compile(TEMPLATES.header, portfolioData));
-    
+
     // Sections
     const sectionsHtml = SECTIONS.map(section => renderSection(section, portfolioData)).join('');
     DOM.render('portfolio-content', sectionsHtml);
-    
+
     // Footer
     DOM.render('portfolio-footer', Template.compile(TEMPLATES.footer, portfolioData));
 }
@@ -166,14 +170,14 @@ function setupTerminalHandlers() {
     const terminalContainer = DOM.select('#terminal-container');
     const portfolioContent = DOM.select('#portfolio-content');
     const portfolioFooter = DOM.select('#portfolio-footer');
-    
+
     let terminal = null;
 
     toggleBtn?.addEventListener('click', () => {
         terminalContainer?.classList.remove('hidden');
         if (portfolioContent) portfolioContent.style.display = 'none';
         if (portfolioFooter) portfolioFooter.style.display = 'none';
-        
+
         setTimeout(() => {
             terminal = new Terminal(portfolioData);
         }, 100);
@@ -183,7 +187,7 @@ function setupTerminalHandlers() {
         terminalContainer?.classList.add('hidden');
         if (portfolioContent) portfolioContent.style.display = 'block';
         if (portfolioFooter) portfolioFooter.style.display = 'block';
-        
+
         if (terminal) {
             terminal.destroy();
             DOM.render('terminal-output', '');
@@ -195,16 +199,16 @@ function setupTerminalHandlers() {
 // Fonction principale d'initialisation
 export async function initializePortfolio() {
     portfolioData = await loadPortfolioData();
-    
+
     if (!portfolioData) {
         DOM.render('portfolio-content', '<p>Erreur de chargement des données</p>');
         return;
     }
-    
+
     updatePageMeta();
     renderPortfolio();
     setupTerminalHandlers();
-    
+
     // Make portfolio data globally available for terminal
     window.portfolioData = portfolioData;
 }

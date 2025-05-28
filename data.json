@@ -118,20 +118,6 @@
       "url": "https://fightingbeat.fr"
     },
     {
-      "title": "Tamagotchi Drive",
-      "type": "Projet IoT",
-      "description": "Tamagotchi Drive est un projet de Tamagotchi développé en C++. Il est possible de conduire sa voiture et de participer à une course contre la montre pour gagner de l'argent afin laver sa voiture et d'acheter de l'essence.",
-      "technologies": [
-        "Arduino",
-        "C/C++",
-        "ESP32"
-      ],
-      "features": [
-        "Conception de circuits électroniques (soudures, câblages)",
-        "Programmation embarquée"
-      ]
-    },
-    {
       "title": "Straweb - Site e-commerce",
       "type": "Application WEB",
       "description": "Straway est une startup dont l'ambition est de végétaliser les foyers à travers la vente de plantes d'intérieur. J'ai participé au développement du site web de l'entreprise.",
@@ -148,6 +134,20 @@
         "Intégration paiement en ligne"
       ],
       "url": "https://www.straway.fr"
+    },
+    {
+      "title": "Tamagotchi Drive",
+      "type": "Projet IoT",
+      "description": "Tamagotchi Drive est un projet de Tamagotchi développé en C++. Il est possible de conduire sa voiture et de participer à une course contre la montre pour gagner de l'argent afin laver sa voiture et d'acheter de l'essence.",
+      "technologies": [
+        "Arduino",
+        "C/C++",
+        "ESP32"
+      ],
+      "features": [
+        "Conception de circuits électroniques (soudures, câblages)",
+        "Programmation embarquée"
+      ]
     }
   ],
   "experience": [

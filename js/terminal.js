@@ -7,13 +7,13 @@ class Terminal {
         this.input = null;
         this.keyboardListener = null;
         this.portfolioData = portfolioData || window.portfolioData;
-        
+
         this.commands = this.initCommands();
-        this.files = { 
+        this.files = {
             'README.md': 'Portfolio de Thomas Fouquet - Étudiant en cybersécurité\nTapez "help" pour voir les commandes disponibles.',
             'CV.pdf': 'CV de Thomas Fouquet - Étudiant en cybersécurité\nUtilisez \'download CV.pdf\' pour télécharger le fichier.'
         };
-        
+
         this.init();
     }
 
@@ -52,10 +52,10 @@ class Terminal {
                 const width = getTerminalWidth();
                 const padding = '═'.repeat(width - 2);
                 const titleText = 'THOMAS FOUQUET TERMINAL';
-                const centeredTitle = titleText.length > width - 2 ? 
+                const centeredTitle = titleText.length > width - 2 ?
                     'THOMAS FOUQUET' : titleText;
                 const paddedTitle = centeredTitle.padStart(Math.floor((width - 2 + centeredTitle.length) / 2)).padEnd(width - 2);
-                
+
                 return `
 ╔${padding}╗
 ║${paddedTitle}║
@@ -69,7 +69,7 @@ Tapez 'help' pour voir les commandes disponibles.`;
             help: () => {
                 const width = getTerminalWidth();
                 const separator = '━'.repeat(width);
-                
+
                 return `
 Commandes disponibles:
 ${separator}
@@ -103,10 +103,10 @@ Navigation:
             section: (title, content) => {
                 const width = getTerminalWidth();
                 const topBorder = '─'.repeat(width - 2);
-                const centeredTitle = title.length > width - 2 ? 
+                const centeredTitle = title.length > width - 2 ?
                     title.substring(0, width - 2) : title;
                 const paddedTitle = centeredTitle.padStart(Math.floor((width - 2 + centeredTitle.length) / 2)).padEnd(width - 2);
-                
+
                 return `
 ╭${topBorder}╮
 │${paddedTitle}│
@@ -186,26 +186,26 @@ N'hésitez pas à me contacter pour toute opportunité !`
     init() {
         this.output = document.getElementById('terminal-output');
         if (!this.output) return console.error('Terminal output element not found');
-        
+
         if (!Terminal.hasBeenOpened) {
             this.display(this.templates.welcome(), 'welcome');
             Terminal.hasBeenOpened = true;
         }
-        
+
         this.createInputLine();
         this.setupKeyboardListener();
     }
 
     setupKeyboardListener() {
         if (this.keyboardListener) document.removeEventListener('keydown', this.keyboardListener);
-        
+
         this.keyboardListener = (e) => {
             const terminalContainer = document.getElementById('terminal-container');
             if (!terminalContainer || terminalContainer.classList.contains('hidden')) return;
-            
+
             if (e.ctrlKey || e.altKey || e.metaKey) return;
             if (['F1', 'F2', 'F3', 'F4', 'F5', 'F6', 'F7', 'F8', 'F9', 'F10', 'F11', 'F12', 'Escape'].includes(e.key)) return;
-            
+
             if (this.input && document.activeElement !== this.input) {
                 this.input.focus();
                 if (e.key.length === 1) {
@@ -214,7 +214,7 @@ N'hésitez pas à me contacter pour toute opportunité !`
                 }
             }
         };
-        
+
         document.addEventListener('keydown', this.keyboardListener);
     }
 
@@ -225,7 +225,7 @@ N'hésitez pas à me contacter pour toute opportunité !`
             'ArrowDown': () => this.navigateHistory(1),
             'Tab': () => this.autoComplete()
         };
-        
+
         if (actions[e.key]) {
             e.preventDefault();
             actions[e.key]();
@@ -235,10 +235,10 @@ N'hésitez pas à me contacter pour toute opportunité !`
     executeCommand() {
         const command = this.input.value.trim();
         if (!command) return this.createInputLine();
-        
+
         this.commandHistory.push(command);
         this.historyIndex = this.commandHistory.length;
-        
+
         this.display(`${this.currentPath}$ ${command}`, 'command');
         this.processCommand(command);
         this.createInputLine();
@@ -246,7 +246,7 @@ N'hésitez pas à me contacter pour toute opportunité !`
 
     processCommand(command) {
         const [cmd, ...args] = command.split(' ');
-        
+
         if (this.commands[cmd]) {
             this.commands[cmd](args);
         } else {
@@ -256,7 +256,7 @@ N'hésitez pas à me contacter pour toute opportunité !`
 
     display(text, className = 'info') {
         if (!this.output) return;
-        
+
         const div = document.createElement('div');
         div.className = className;
         div.innerHTML = text;
@@ -271,7 +271,7 @@ N'hésitez pas à me contacter pour toute opportunité !`
 
     readFile(args) {
         if (!args?.length) return this.display('cat: missing file operand', 'error');
-        
+
         const filename = args[0];
         if (this.files[filename]) {
             this.display(this.files[filename], 'file-content');
@@ -282,17 +282,17 @@ N'hésitez pas à me contacter pour toute opportunité !`
 
     downloadFile(args) {
         if (!args?.length) return this.display('download: missing file operand\nUsage: download <filename>', 'error');
-        
+
         const filename = args[0];
         const cvData = this.portfolioData?.personal?.cv;
-        
+
         if (filename === 'CV.pdf' && cvData) {
             this.display('🔄 Initialisation du téléchargement...', 'info');
-            
+
             // Simulate download progress
             setTimeout(() => {
                 this.display(`📄 Téléchargement de ${cvData.filename} (${cvData.size})`, 'info');
-                
+
                 // Create and trigger download
                 const link = document.createElement('a');
                 link.href = cvData.url;
@@ -301,7 +301,7 @@ N'hésitez pas à me contacter pour toute opportunité !`
                 document.body.appendChild(link);
                 link.click();
                 document.body.removeChild(link);
-                
+
                 this.display('✅ Téléchargement terminé avec succès !', 'info');
             }, 500);
         } else if (this.files[filename]) {
@@ -321,7 +321,7 @@ N'hésitez pas à me contacter pour toute opportunité !`
         setTimeout(() => {
             const elements = ['terminal-container', 'portfolio-content', 'portfolio-footer']
                 .map(id => document.getElementById(id));
-            
+
             if (elements.every(el => el)) {
                 elements[0].classList.add('hidden');
                 elements[1].style.display = 'block';
@@ -333,7 +333,7 @@ N'hésitez pas à me contacter pour toute opportunité !`
 
     navigateHistory(direction) {
         if (!this.commandHistory.length) return;
-        
+
         this.historyIndex = Math.max(0, Math.min(this.commandHistory.length, this.historyIndex + direction));
         this.input.value = this.historyIndex < this.commandHistory.length ? this.commandHistory[this.historyIndex] : '';
     }
@@ -342,7 +342,7 @@ N'hésitez pas à me contacter pour toute opportunité !`
         const input = this.input.value;
         const parts = input.split(' ');
         const commands = Object.keys(this.commands);
-        
+
         if (parts.length === 1) {
             const matches = commands.filter(cmd => cmd.startsWith(input));
             if (matches.length === 1) {
@@ -354,7 +354,7 @@ N'hésitez pas à me contacter pour toute opportunité !`
         } else if (parts.length >= 2 && ['cat', 'less', 'more', 'head', 'tail', 'download'].includes(parts[0])) {
             const partialFile = parts[parts.length - 1];
             const matches = Object.keys(this.files).filter(file => file.startsWith(partialFile));
-            
+
             if (matches.length === 1) {
                 parts[parts.length - 1] = matches[0];
                 this.input.value = parts.join(' ');
@@ -368,24 +368,24 @@ N'hésitez pas à me contacter pour toute opportunité !`
     createInputLine() {
         const oldInputLine = this.output?.querySelector('.terminal-input-line');
         oldInputLine?.remove();
-        
+
         if (!this.output) return;
-        
+
         const inputLine = document.createElement('div');
         inputLine.className = 'terminal-input-line';
         inputLine.innerHTML = `
             <span class="terminal-prompt">${this.currentPath}$ </span>
             <input type="text" class="terminal-input" autocomplete="off" spellcheck="false">
         `;
-        
+
         this.output.appendChild(inputLine);
         this.input = inputLine.querySelector('.terminal-input');
-        
+
         if (this.input) {
             this.input.addEventListener('keydown', (e) => this.handleKeyDown(e));
             this.input.focus();
         }
-        
+
         this.scrollToBottom();
     }
 
