@@ -91,29 +91,7 @@ git  clone https://github.com/weyrito/weyrito-portfolio.git
 ├── LICENSE                # MIT License
 ├── CNAME                  # Domain configuration
 └── README.md              # Documentation
-```
-
-  
-
-## 🔧 Architecture
-
-  
-
-The application follows a modular architecture:
-
-  
-
-- **portfolio.js**: Main application logic, data loading, and UI rendering
-
-- **terminal.js**: Complete terminal emulator with Unix-like commands
-
-- **utils.js**: Reusable DOM manipulation and template utilities
-
-- **data.json**: Centralized data storage for easy content management
-
-- **style.css**: CSS-only animations and cybersecurity-themed design
-
-  
+```  
 
 ## 🖥️ Terminal commands
 

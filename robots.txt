@@ -1,0 +1,14 @@
+User-agent: *
+Allow: /
+Allow: /assets/
+Allow: /css/
+Allow: /js/
+
+Sitemap: https://thomas-fouquet.fr/sitemap.xml
+
+# Optimisations pour les moteurs de recherche
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /

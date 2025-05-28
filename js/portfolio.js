@@ -20,6 +20,20 @@ const TEMPLATES = {
     footer: `
         <hr>
         <p><strong>{{personal.status}} dans la {{personal.location}}</strong></p>
+        <div class="social-links">
+            <a href="{{personal.social.github}}" target="_blank" rel="noopener noreferrer" class="social-link">
+                <span class="social-icon">🐙</span>
+                <span class="social-text">GitHub</span>
+            </a>
+            <a href="{{personal.social.linkedin}}" target="_blank" rel="noopener noreferrer" class="social-link">
+                <span class="social-icon">💼</span>
+                <span class="social-text">LinkedIn</span>
+            </a>
+            <a href="{{personal.social.email}}" target="_blank" rel="noopener noreferrer" class="social-link">
+                <span class="social-icon">📧</span>
+                <span class="social-text">Email</span>
+            </a>
+        </div>
         <p>Portfolio mis à jour en mai 2025</p>
         <p style="margin-top: 1rem; font-size: 0.8em; color: var(--text-gray);">
             📄 Ce projet est sous <a href="https://github.com/weyrito/weyrito-portfolio/blob/main/LICENSE" target="_blank" style="color: var(--neon-cyan);">licence MIT</a> - 
@@ -30,8 +44,14 @@ const TEMPLATES = {
 const SECTIONS = [
     {
         id: 'about',
-        title: 'À propos',
-        render: (data) => `<p id="about">${data.personal.about}</p>`
+        title: 'À propos de Thomas Fouquet',
+        render: (data) => `
+            <div itemscope itemtype="https://schema.org/Person">
+                <meta itemprop="name" content="Thomas Fouquet">
+                <meta itemprop="jobTitle" content="${data.personal.title}">
+                <meta itemprop="email" content="${data.personal.email}">
+                <p id="about" itemprop="description">${data.personal.about}</p>
+            </div>`
     },
     {
         id: 'skills',
@@ -138,10 +158,10 @@ async function loadPortfolioData() {
 
 function updatePageMeta() {
     const { personal } = portfolioData;
-    document.title = `Portfolio - ${personal.name}`;
-    DOM.select('#page-title').textContent = `Portfolio - ${personal.name}`;
+    document.title = `Thomas Fouquet - ${personal.title} | Portfolio & CV`;
+    DOM.select('#page-title').textContent = `Thomas Fouquet - ${personal.title} | Portfolio & CV`;
     DOM.select('#page-description').setAttribute('content',
-        `Portfolio de ${personal.name} - ${personal.title}`);
+        `Thomas Fouquet, ${personal.title.toLowerCase()} dans le ${personal.location}. Portfolio, projets et CV. ${personal.status}.`);
 }
 
 function renderSection(section, data) {
