@@ -132,6 +132,70 @@ header a[href^="mailto:"]:hover {
     text-decoration: underline;
 }
 
+/* Header Actions */
+.header-actions {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    margin-top: 1.5rem;
+}
+
+/* CV Download Button */
+.cv-download-btn {
+    background: var(--gradient-cyber);
+    border: 2px solid var(--neon-purple);
+    color: var(--darker-bg);
+    padding: 0.8rem 2rem;
+    border-radius: 8px;
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 700;
+    font-size: 1rem;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    box-shadow: 0 0 20px rgba(139, 92, 246, 0.3);
+    display: inline-flex;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.cv-download-btn:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 30px rgba(139, 92, 246, 0.5);
+    background: var(--neon-purple);
+    border-color: var(--primary-green);
+}
+
+.cv-download-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: left 0.5s ease;
+}
+
+.cv-download-btn:hover::before {
+    left: 100%;
+}
+
+.cv-icon {
+    margin-right: 0.5rem;
+    font-size: 1.1em;
+    animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+}
+
 /* Container */
 .container {
     max-width: 1200px;
@@ -700,6 +764,16 @@ hr {
         padding: 0.6rem 1.5rem;
         font-size: 0.9rem;
     }
+    
+    .header-actions {
+        flex-direction: column;
+        gap: 0.8rem;
+    }
+    
+    .cv-download-btn {
+        padding: 0.6rem 1.5rem;
+        font-size: 0.9rem;
+    }
 }
 
 @media (max-width: 480px) {
@@ -738,6 +812,11 @@ hr {
         padding: 0.5rem;
         margin: 0.5rem 0;
         font-size: 0.7rem;
+    }
+    
+    .cv-download-btn {
+        padding: 0.5rem 1rem;
+        font-size: 0.8rem;
     }
 }
 

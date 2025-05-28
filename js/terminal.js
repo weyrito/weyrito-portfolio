@@ -1,14 +1,18 @@
 class Terminal {
-    constructor() {
+    constructor(portfolioData = null) {
         this.currentPath = '/home/thomas';
         this.commandHistory = [];
         this.historyIndex = -1;
         this.output = null;
         this.input = null;
         this.keyboardListener = null;
+        this.portfolioData = portfolioData || window.portfolioData;
         
         this.commands = this.initCommands();
-        this.files = { 'README.md': 'Portfolio de Thomas Fouquet - Étudiant en cybersécurité\nTapez "help" pour voir les commandes disponibles.' };
+        this.files = { 
+            'README.md': 'Portfolio de Thomas Fouquet - Étudiant en cybersécurité\nTapez "help" pour voir les commandes disponibles.',
+            'CV.pdf': 'CV de Thomas Fouquet - Étudiant en cybersécurité\nUtilisez \'download CV.pdf\' pour télécharger le fichier.'
+        };
         
         this.init();
     }
@@ -16,13 +20,13 @@ class Terminal {
     initCommands() {
         return {
             help: () => this.display(this.templates.help()),
-            about: () => this.display(this.formatSection('À PROPOS', portfolioData?.personal, this.formatters.about)),
-            skills: () => this.display(this.formatSection('COMPÉTENCES TECHNIQUES', portfolioData?.skills, this.formatters.skills)),
-            projects: () => this.display(this.formatSection('PROJETS RÉALISÉS', portfolioData?.projects, this.formatters.projects)),
-            experience: () => this.display(this.formatSection('EXPÉRIENCES', { exp: portfolioData?.experience, interests: portfolioData?.interests }, this.formatters.experience)),
-            education: () => this.display(this.formatSection('FORMATION', portfolioData?.education, this.formatters.education)),
-            languages: () => this.display(this.formatSection('LANGUES', portfolioData?.languages, this.formatters.languages)),
-            contact: () => this.display(this.formatSection('CONTACT', portfolioData?.personal, this.formatters.contact)),
+            about: () => this.display(this.formatSection('À PROPOS', this.portfolioData?.personal, this.formatters.about)),
+            skills: () => this.display(this.formatSection('COMPÉTENCES TECHNIQUES', this.portfolioData?.skills, this.formatters.skills)),
+            projects: () => this.display(this.formatSection('PROJETS RÉALISÉS', this.portfolioData?.projects, this.formatters.projects)),
+            experience: () => this.display(this.formatSection('EXPÉRIENCES', { exp: this.portfolioData?.experience, interests: this.portfolioData?.interests }, this.formatters.experience)),
+            education: () => this.display(this.formatSection('FORMATION', this.portfolioData?.education, this.formatters.education)),
+            languages: () => this.display(this.formatSection('LANGUES', this.portfolioData?.languages, this.formatters.languages)),
+            contact: () => this.display(this.formatSection('CONTACT', this.portfolioData?.personal, this.formatters.contact)),
             clear: () => this.clearTerminal(),
             ls: () => this.display(Object.keys(this.files).join('  ')),
             cat: (args) => this.readFile(args),
@@ -30,6 +34,7 @@ class Terminal {
             whoami: () => this.display('thomas'),
             date: () => this.display(new Date().toString()),
             exit: () => this.exitTerminal(),
+            download: (args) => this.downloadFile(args),
         };
     }
 
@@ -78,9 +83,12 @@ Portfolio:
   languages   - Langues parlées
   contact     - Informations de contact
 
-Système:
+Fichiers:
   ls          - Lister les fichiers
   cat <file>  - Afficher le contenu d'un fichier
+  download <file> - Télécharger un fichier
+
+Système:
   pwd         - Afficher le répertoire courant
   whoami      - Afficher l'utilisateur
   date        - Afficher la date
@@ -147,7 +155,15 @@ ${data.about}
 
             education: (education) => education.map(edu => {
                 let result = `🎓 ${edu.title} (${edu.period})`;
-                if (edu.institution) result += `\n   ${edu.institution}`;
+                if (edu.institution) {
+                    if (typeof edu.institution === 'string') {
+                        result += `\n   ${edu.institution}`;
+                    } else if (edu.institution.url) {
+                        result += `\n   ${edu.institution.text} [${edu.institution.url}]`;
+                    } else {
+                        result += `\n   ${edu.institution.text}`;
+                    }
+                }
                 if (edu.specialization) result += `\n   Spécialisation: ${edu.specialization}`;
                 if (edu.subjects) result += `\n${edu.subjects.map(s => `   • ${s}`).join('\n')}`;
                 return result;
@@ -264,6 +280,37 @@ N'hésitez pas à me contacter pour toute opportunité !`
         }
     }
 
+    downloadFile(args) {
+        if (!args?.length) return this.display('download: missing file operand\nUsage: download <filename>', 'error');
+        
+        const filename = args[0];
+        const cvData = this.portfolioData?.personal?.cv;
+        
+        if (filename === 'CV.pdf' && cvData) {
+            this.display('🔄 Initialisation du téléchargement...', 'info');
+            
+            // Simulate download progress
+            setTimeout(() => {
+                this.display(`📄 Téléchargement de ${cvData.filename} (${cvData.size})`, 'info');
+                
+                // Create and trigger download
+                const link = document.createElement('a');
+                link.href = cvData.url;
+                link.download = cvData.filename;
+                link.style.display = 'none';
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+                
+                this.display('✅ Téléchargement terminé avec succès !', 'info');
+            }, 500);
+        } else if (this.files[filename]) {
+            this.display(`download: cannot download '${filename}': not a downloadable file`, 'error');
+        } else {
+            this.display(`download: ${filename}: No such file or directory`, 'error');
+        }
+    }
+
     clearTerminal() {
         this.output.innerHTML = '';
         this.createInputLine();
@@ -304,7 +351,7 @@ N'hésitez pas à me contacter pour toute opportunité !`
                 this.display(`${this.currentPath}$ ${input}`, 'command');
                 this.display(matches.join('  '), 'info');
             }
-        } else if (parts.length >= 2 && ['cat', 'less', 'more', 'head', 'tail'].includes(parts[0])) {
+        } else if (parts.length >= 2 && ['cat', 'less', 'more', 'head', 'tail', 'download'].includes(parts[0])) {
             const partialFile = parts[parts.length - 1];
             const matches = Object.keys(this.files).filter(file => file.startsWith(partialFile));
             

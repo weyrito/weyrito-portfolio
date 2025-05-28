@@ -8,7 +8,10 @@ const TEMPLATES = {
         <h1 id="name">{{personal.name}}</h1>
         <h2 id="title">{{personal.title}}</h2>
         <p><strong>Email:</strong> <a href="mailto:{{personal.email}}" target="_blank" id="email">{{personal.email}}</a> | <strong>Téléphone:</strong> <span id="phone">{{personal.phone}}</span></p>
-        <div class="terminal-toggle">
+        <div class="header-actions">
+            <a href="{{personal.cv.url}}" download="{{personal.cv.filename}}" class="cv-download-btn">
+                <span class="cv-icon">📄</span> Télécharger CV
+            </a>
             <button id="toggle-terminal" class="terminal-btn">
                 <span class="terminal-icon">></span> Mode Terminal
             </button>
@@ -49,7 +52,7 @@ const SECTIONS = [
                     <p class="project-type">${project.type}</p>
                     <p>${project.description}</p>
                     <ul>
-                        <li><strong>Technologies:</strong> ${project.technologies.join(', ')}</li>
+                        <li>Technologies: ${project.technologies.join(', ')}</li>
                         ${Template.list(project.features)}
                     </ul>
                     ${project.url ? `<a href="${project.url}" target="_blank" class="project-link">Voir le site</a>` : ''}
@@ -74,13 +77,26 @@ const SECTIONS = [
         id: 'education',
         title: 'Formation',
         render: (data) => {
-            const eduHtml = data.education.map(edu => `
-                <div>
-                    <h4>${edu.title}</h4>
-                    <p><em>${edu.period}${edu.institution ? ` | ${edu.institution}` : ''}</em></p>
-                    ${edu.specialization ? `<p>Spécialisation: ${edu.specialization}</p>` : ''}
-                    ${edu.subjects ? `<ul>${Template.list(edu.subjects)}</ul>` : ''}
-                </div>`).join('');
+            const eduHtml = data.education.map(edu => {
+                let institutionHtml = '';
+                if (edu.institution) {
+                    if (typeof edu.institution === 'string') {
+                        institutionHtml = edu.institution;
+                    } else if (edu.institution.url) {
+                        institutionHtml = `<a href="${edu.institution.url}" target="_blank" class="skill-link">${edu.institution.text}</a>`;
+                    } else {
+                        institutionHtml = edu.institution.text;
+                    }
+                }
+                
+                return `
+                    <div>
+                        <h4>${edu.title}</h4>
+                        <p><em>${edu.period}${institutionHtml ? ` | ${institutionHtml}` : ''}</em></p>
+                        ${edu.specialization ? `<p>Spécialisation: ${edu.specialization}</p>` : ''}
+                        ${edu.subjects ? `<ul>${Template.list(edu.subjects)}</ul>` : ''}
+                    </div>`;
+            }).join('');
             return `<div id="education-container">${eduHtml}</div>`;
         }
     },
@@ -158,7 +174,9 @@ function setupTerminalHandlers() {
         if (portfolioContent) portfolioContent.style.display = 'none';
         if (portfolioFooter) portfolioFooter.style.display = 'none';
         
-        setTimeout(() => terminal = new Terminal(), 100);
+        setTimeout(() => {
+            terminal = new Terminal(portfolioData);
+        }, 100);
     });
 
     closeBtn?.addEventListener('click', () => {
@@ -186,6 +204,9 @@ export async function initializePortfolio() {
     updatePageMeta();
     renderPortfolio();
     setupTerminalHandlers();
+    
+    // Make portfolio data globally available for terminal
+    window.portfolioData = portfolioData;
 }
 
 // Fonction de compatibilité (obsolète)
