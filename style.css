@@ -233,6 +233,32 @@ h4::before {
     left: 0;
 }
 
+/* Skill Links */
+.skill-link {
+    color: inherit;
+    text-decoration: none;
+    position: relative;
+    transition: all 0.3s ease;
+}
+
+.skill-link:hover {
+    color: var(--primary-green);
+    text-shadow: 0 0 8px var(--primary-green);
+}
+
+.skill-link::after {
+    content: '🔗';
+    font-size: 0.7em;
+    margin-left: 0.4rem;
+    opacity: 0.6;
+    transition: all 0.3s ease;
+}
+
+.skill-link:hover::after {
+    opacity: 1;
+    transform: scale(1.1);
+}
+
 /* Lists */
 ul {
     list-style: none;
@@ -433,11 +459,15 @@ li:hover {
     font-family: 'JetBrains Mono', monospace;
     font-size: 0.9rem;
     line-height: 1.4;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
 }
 
 .terminal-output div {
     margin-bottom: 0.5rem;
     white-space: pre-wrap;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
 }
 
 .terminal-output .command {
@@ -643,6 +673,7 @@ hr {
     
     .terminal-output {
         font-size: 0.8rem;
+        line-height: 1.3;
     }
     
     .terminal-input {
@@ -679,6 +710,7 @@ hr {
     
     .terminal-output {
         font-size: 0.7rem;
+        line-height: 1.2;
     }
     
     .terminal-input {

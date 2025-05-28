@@ -32,7 +32,11 @@ export const DOM = {
 
 export const Template = {
     list: (items, transform = (item) => item) => 
-        items.map(item => `<li>${transform(item)}</li>`).join(''),
+        items.map(item => {
+            const content = typeof item === 'string' ? item : 
+                           item.url ? `<a href="${item.url}" target="_blank" class="skill-link">${item.text}</a>` : item.text;
+            return `<li>${transform(content)}</li>`;
+        }).join(''),
     
     // Template simple avec placeholders
     compile: (template, data) => {

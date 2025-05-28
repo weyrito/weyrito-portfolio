@@ -64,7 +64,7 @@ const SECTIONS = [
             const expHtml = data.experience.map(exp => `
                 <div>
                     <h4>${exp.title}</h4>
-                    <p><em>${exp.period} | ${exp.location}</em></p>
+                    <p><em>${exp.period}${exp.location ? ` | ${exp.location}` : ''}</em></p>
                     <ul>${Template.list(exp.highlights)}</ul>
                 </div>`).join('');
             return `<div id="experience-container">${expHtml}</div>`;
@@ -88,8 +88,9 @@ const SECTIONS = [
         id: 'languages',
         title: 'Langues',
         render: (data) => {
-            const langHtml = Template.list(data.languages, lang => 
-                `<strong>${lang.language}:</strong> ${lang.level}`);
+            const langHtml = data.languages.map(lang => 
+                `<li><strong>${lang.language}:</strong> ${lang.level}</li>`
+            ).join('');
             return `<ul id="languages-list">${langHtml}</ul>`;
         }
     },

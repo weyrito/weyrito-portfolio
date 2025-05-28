@@ -34,18 +34,40 @@ class Terminal {
     }
 
     get templates() {
+        // Calculate responsive width based on screen size
+        const getTerminalWidth = () => {
+            const screenWidth = window.innerWidth;
+            if (screenWidth < 480) return 35; // Mobile
+            if (screenWidth < 768) return 50; // Tablet
+            return 61; // Desktop
+        };
+
         return {
-            welcome: () => `
-╔══════════════════════════════════════════════════════════════╗
-║                    THOMAS FOUQUET TERMINAL                   ║
-╚══════════════════════════════════════════════════════════════╝
+            welcome: () => {
+                const width = getTerminalWidth();
+                const padding = '═'.repeat(width - 2);
+                const titleText = 'THOMAS FOUQUET TERMINAL';
+                const centeredTitle = titleText.length > width - 2 ? 
+                    'THOMAS FOUQUET' : titleText;
+                const paddedTitle = centeredTitle.padStart(Math.floor((width - 2 + centeredTitle.length) / 2)).padEnd(width - 2);
+                
+                return `
+╔${padding}╗
+║${paddedTitle}║
+╚${padding}╝
 
 Bienvenue dans mon portfolio interactif !
-Tapez 'help' pour voir les commandes disponibles.`,
+Tapez 'help' pour voir les commandes disponibles.`;
 
-            help: () => `
+            },
+
+            help: () => {
+                const width = getTerminalWidth();
+                const separator = '━'.repeat(width);
+                
+                return `
 Commandes disponibles:
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+${separator}
 
 Portfolio:
   about       - À propos de moi
@@ -67,14 +89,23 @@ Système:
 
 Navigation:
   ↑/↓         - Historique des commandes
-  Tab         - Auto-complétion`,
+  Tab         - Auto-complétion`;
+            },
 
-            section: (title, content) => `
-╭─────────────────────────────────────────────────────────────╮
-│${title.padStart(Math.floor((61 + title.length) / 2)).padEnd(61)}│
-╰─────────────────────────────────────────────────────────────╯
+            section: (title, content) => {
+                const width = getTerminalWidth();
+                const topBorder = '─'.repeat(width - 2);
+                const centeredTitle = title.length > width - 2 ? 
+                    title.substring(0, width - 2) : title;
+                const paddedTitle = centeredTitle.padStart(Math.floor((width - 2 + centeredTitle.length) / 2)).padEnd(width - 2);
+                
+                return `
+╭${topBorder}╮
+│${paddedTitle}│
+╰${topBorder}╯
 
-${content}`
+${content}`;
+            }
         };
     }
 
@@ -93,7 +124,14 @@ ${data.about}
 
             skills: (skills) => Object.entries(skills).map(([key, skill]) => {
                 const icon = icons[key] || '•';
-                return `${icon}  ${skill.title}:\n${skill.items.map(item => `    • ${item}`).join('\n')}`;
+                const items = skill.items.map(item => {
+                    if (typeof item === 'string') {
+                        return `    • ${item}`;
+                    } else {
+                        return `    • ${item.text}${item.url ? ` [${item.url}]` : ''}`;
+                    }
+                }).join('\n');
+                return `${icon}  ${skill.title}:\n${items}`;
             }).join('\n\n'),
 
             projects: (projects) => projects.map((project, i) => {
@@ -102,7 +140,7 @@ ${data.about}
             }).join('\n\n'),
 
             experience: ({ exp, interests }) => {
-                let output = exp?.map(e => `🌎 ${e.title} (${e.period})\n   ${e.location}\n${e.highlights.map(h => `   • ${h}`).join('\n')}`).join('\n\n') || '';
+                let output = exp?.map(e => `🌎 ${e.title} (${e.period})${e.location ? `\n   ${e.location}` : ''}\n${e.highlights.map(h => `   • ${h}`).join('\n')}`).join('\n\n') || '';
                 if (interests) output += `\n\nCentres d'intérêt:\n${interests.map(i => `🏃 ${i}`).join('\n')}`;
                 return output;
             },
