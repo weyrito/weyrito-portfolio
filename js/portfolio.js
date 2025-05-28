@@ -44,7 +44,7 @@ const TEMPLATES = {
 const SECTIONS = [
     {
         id: 'about',
-        title: 'À propos de Thomas Fouquet',
+        title: 'À propos',
         render: (data) => `
             <div itemscope itemtype="https://schema.org/Person">
                 <meta itemprop="name" content="Thomas Fouquet">
