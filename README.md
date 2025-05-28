@@ -86,7 +86,8 @@ git  clone https://github.com/weyrito/weyrito-portfolio.git
 │   ├── terminal.js        # Interactive terminal functionality
 │   └── utils.js           # Utility functions (DOM, Template helpers)
 ├── assets/
-│   └── thomas-fouquet-cv.pdf  # CV file for download
+│   ├── thomas-fouquet-cv.pdf  # CV file for download
+│   └── portfolio-preview.png  # Social media preview image (1200x630px)
 ├── LICENSE                # MIT License
 ├── CNAME                  # Domain configuration
 └── README.md              # Documentation
@@ -147,8 +148,6 @@ The interactive terminal supports various commands:
 - `clear` - Clear terminal
 
 - `exit` - Return to traditional interface
-
-  
 
 ## 📄 License
 
