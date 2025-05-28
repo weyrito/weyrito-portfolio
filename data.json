@@ -18,14 +18,17 @@
       "title": "Cybersécurité",
       "items": [
         "Analyse de vulnérabilités (Nmap, Wireshark)",
-        "Sécurité réseau et firewall (pfSense, iptables)"
+        "Sécurité réseau et firewall (pfSense, iptables)",
+        "Cryptographie (chiffrement, signatures numériques)",
+        "Sécurité des applications web (OWASP, tests d'intrusion)",
+        "IDS/IPS (Suricata)"
       ]
     },
     "systems": {
       "title": "Systèmes & Réseaux",
       "items": [
         "Administration Linux",
-        "Configuration réseau (TCP/IP, VPN)",
+        "Configuration réseau (TCP/IP, VPN, DHCP, DNS, VLAN, NAT)",
         "Virtualisation (VirtualBox, Proxmox, Docker)",
         "Supervision et monitoring (Prometheus, Grafana)"
       ]
@@ -49,8 +52,7 @@
       "items": [
         "MySQL, PostgreSQL, SQLite",
         "MongoDB",
-        "Conception et administration de bases de données",
-        "Optimisation des requêtes SQL"
+        "Conception et administration de bases de données"
       ]
     },
     "languages": {
@@ -59,7 +61,6 @@
         "Python (automatisation, scripts de sécurité)",
         "C/C++ (programmation système, IoT)",
         "Bash/Shell scripting"
-        
       ]
     },
     "soft": {
@@ -75,6 +76,32 @@
     }
   },
   "projects": [
+    {
+      "title": "Homelab",
+      "type": "Laboratoire personnelle",
+      "description": "Mise en place d'un homelab pour l'apprentissage et le développement de compétences en cybersécurité, en virtualisation et en administration système/réseau. C'est un terrain de jeu pour moi dans lequel j'héberge des applications selfhost FOSS et j'approfondis mes connaissances en réseau.",
+      "technologies": [
+        "Proxmox",
+        "Docker",
+        "WireGuard",
+        "Nginx",
+        "Grafana",
+        "Prometheus",
+        "AdGUARD",
+        "opnsense",
+        "pfSense",
+        "OpenVPN",
+        "et plus encore..."
+      ],
+      "features": [
+        "Virtualisation de serveurs et services",
+        "Configuration de VPN pour accès distant sécurisé",
+        "Surveillance et monitoring des performances système",
+        "Hébergement d'applications selfhost FOSS (Nextcloud, Gitea, AdGuard, etc.)",
+        "URL bientôt disponible"
+      ],
+      "url": ""
+    },
     {
       "title": "Fighting Beat - Site web du club de MMA",
       "type": "Application WEB",
@@ -182,7 +209,8 @@
         "Mathématiques + Maths expertes",
         "Physique - Chimie",
         "Sciences de l'ingénieur",
-        "Classe européenne (anglais)"
+        "Classe européenne (anglais)",
+        "Baccalauréat mention bien (15,96/20)"
       ]
     }
   ],

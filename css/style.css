@@ -271,6 +271,13 @@ h4::before {
     margin-right: 0.5rem;
 }
 
+/* About section text justification */
+#about {
+    text-align: justify;
+    hyphens: auto;
+    word-spacing: 0.1em;
+}
+
 /* Skills Grid */
 .skills-grid {
     display: grid;

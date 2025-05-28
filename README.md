@@ -32,6 +32,10 @@ Personal portfolio showcasing my skills, projects and experiences in cybersecuri
 
 - Custom CSS animations
 
+- Modular JavaScript architecture
+
+- JSON-based data management
+
   
 
 ## 🛠️ Technologies used
@@ -40,13 +44,13 @@ Personal portfolio showcasing my skills, projects and experiences in cybersecuri
 
 - HTML5
 
-- CSS3
+- CSS3 (with CSS Variables and Grid/Flexbox)
 
-- Vanilla JavaScript
+- Vanilla JavaScript (ES6 modules)
 
 - Responsive design
 
-- JSON for data
+- JSON for data storage
 
   
 
@@ -75,16 +79,75 @@ git  clone https://github.com/weyrito/weyrito-portfolio.git
 ## 📁 Project structure
 
 ```
-├── index.html          # Main page
-├── style.css           # CSS styles and animations
-├── data.json           # Portfolio data (personal info, skills, projects)
-├── CNAME              # Domain configuration
-├── README.md          # Documentation
-└── js/
-    ├── portfolio.js   # Main portfolio logic and rendering
-    ├── terminal.js    # Interactive terminal functionality
-    └── utils.js       # Utility functions (DOM, Template)
+├── index.html              # Main HTML page
+├── data.json              # Portfolio data (personal info, skills, projects)
+├── css/
+│   └── style.css          # Main stylesheet with cybersecurity theme
+├── js/
+│   ├── portfolio.js       # Main portfolio logic and rendering
+│   ├── terminal.js        # Interactive terminal functionality
+│   └── utils.js           # Utility functions (DOM, Template helpers)
+├── assets/
+│   └── thomas-fouquet-cv.pdf  # CV file for download
+├── CNAME                  # Domain configuration
+└── README.md              # Documentation
 ```
+
+  
+
+## 🔧 Architecture
+
+  
+
+The application follows a modular architecture:
+
+  
+
+- **portfolio.js**: Main application logic, data loading, and UI rendering
+
+- **terminal.js**: Complete terminal emulator with Unix-like commands
+
+- **utils.js**: Reusable DOM manipulation and template utilities
+
+- **data.json**: Centralized data storage for easy content management
+
+- **style.css**: CSS-only animations and cybersecurity-themed design
+
+  
+
+## 🖥️ Terminal Commands
+
+  
+
+The interactive terminal supports various commands:
+
+  
+
+- `help` - Show available commands
+
+- `about` - Personal information
+
+- `skills` - Technical skills overview
+
+- `projects` - Projects portfolio
+
+- `experience` - Professional experience
+
+- `education` - Educational background
+
+- `languages` - Language proficiency
+
+- `contact` - Contact information
+
+- `ls` - List files
+
+- `cat <file>` - Display file content
+
+- `download <file>` - Download files (CV)
+
+- `clear` - Clear terminal
+
+- `exit` - Return to traditional interface
 
   
 
@@ -99,3 +162,7 @@ git  clone https://github.com/weyrito/weyrito-portfolio.git
 - Specialization: Cybersecurity
 
 - Status: Looking for internship/apprenticeship
+
+  
+
+**Last updated:** May 28th, 2025

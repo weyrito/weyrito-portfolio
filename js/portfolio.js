@@ -75,7 +75,7 @@ const SECTIONS = [
     },
     {
         id: 'education',
-        title: 'Formation',
+        title: 'Formations',
         render: (data) => {
             const eduHtml = data.education.map(edu => {
                 let institutionHtml = '';
