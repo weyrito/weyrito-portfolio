@@ -105,7 +105,7 @@ class CVComponentRenderer {
     addInterests(interests, x, y, width) {
         if (this.layoutManager.checkPageOverflow(y + 25)) return y;
         
-        y = this.sectionRenderer.addSection("Centres d'interet", x, y, width);
+        y = this.sectionRenderer.addSection("Centres d'intérêt", x, y, width);
         interests.forEach(interest => {
             if (this.layoutManager.checkPageOverflow(y + 5)) return;
             
@@ -120,7 +120,7 @@ class CVComponentRenderer {
     }
 
     addExperiences(experiences, x, y, width) {
-        y = this.sectionRenderer.addSection('Experience professionnelle', x, y, width);
+        y = this.sectionRenderer.addSection('Expériences professionnelles', x, y, width);
         experiences.forEach((exp, index) => {
             y = this.addExperienceItem(exp, x, y, width, index, index === experiences.length - 1);
         });
@@ -130,7 +130,7 @@ class CVComponentRenderer {
     addEducation(education, x, y, width) {
         if (this.layoutManager.checkPageOverflow(y + 30)) return y;
         
-        y = this.sectionRenderer.addSection('Formation', x, y, width);
+        y = this.sectionRenderer.addSection('Formations', x, y, width);
         education.forEach((edu, index) => {
             y = this.addEducationItem(edu, x, y, width, index, index === education.length - 1);
         });
@@ -281,14 +281,15 @@ class CVComponentRenderer {
             fontSize: 9, 
             color: this.colors.text, 
             bold: true,
-            maxWidth: maxWidth - 35
+            maxWidth: maxWidth - 50
         });
         
         this.textRenderer.addText(edu.period, x + maxWidth, y, { 
             fontSize: 7, 
             color: this.colors.secondary, 
             align: 'right',
-            italic: true
+            italic: true,
+            bold: true
         });
         
         return y + 5;
