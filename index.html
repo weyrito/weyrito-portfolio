@@ -8,6 +8,9 @@
     <link rel="icon" type="image/svg+xml" href="https://icons.getbootstrap.com/assets/icons/terminal-fill.svg">
     <link rel="apple-touch-icon" href="https://icons.getbootstrap.com/assets/icons/terminal-fill.svg">
     
+    <!-- Preload jsPDF for faster CV generation -->
+    <link rel="preload" href="https://unpkg.com/jspdf@latest/dist/jspdf.umd.min.js" as="script">
+    
     <!-- Meta tags SEO -->
     <meta name="author" content="Thomas">
     <meta name="keywords" content="cybersécurité, portfolio, développement, sécurité informatique, hacking éthique">
@@ -76,6 +79,7 @@
     </footer>
 
     <script src="js/terminal.js"></script>
+    <script src="js/cv-web-generator.js"></script>
     <script type="module">
         import { initializePortfolio } from './js/portfolio.js';
         

@@ -201,6 +201,158 @@ header a[href^="mailto:"]:hover {
     }
 }
 
+/* CV Generator Button */
+.cv-generate-btn {
+    background: var(--gradient-cyber);
+    border: 2px solid var(--neon-cyan);
+    color: var(--darker-bg);
+    padding: 0.8rem 2rem;
+    border-radius: 8px;
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 700;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    box-shadow: 0 0 20px rgba(6, 182, 212, 0.3);
+    display: inline-flex;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.cv-generate-btn:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 30px rgba(6, 182, 212, 0.5);
+    background: var(--neon-cyan);
+    border-color: var(--primary-green);
+}
+
+/* CV View Button */
+.cv-view-btn {
+    background: var(--gradient-cyber);
+    border: 2px solid var(--neon-purple);
+    color: var(--darker-bg);
+    padding: 0.8rem 2rem;
+    border-radius: 8px;
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 700;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    box-shadow: 0 0 20px rgba(139, 92, 246, 0.3);
+    display: inline-flex;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.cv-view-btn:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 30px rgba(139, 92, 246, 0.5);
+    background: var(--neon-purple);
+    border-color: var(--primary-green);
+}
+
+.cv-view-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: left 0.5s ease;
+}
+
+.cv-view-btn:hover::before {
+    left: 100%;
+}
+
+/* CV Menu */
+.cv-menu {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.8);
+    z-index: 2000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(5px);
+}
+
+.cv-menu-content {
+    background: var(--terminal-bg);
+    border: 2px solid var(--border-green);
+    border-radius: 12px;
+    padding: 2rem;
+    min-width: 300px;
+    text-align: center;
+    position: relative;
+    box-shadow: 0 20px 40px rgba(0, 255, 65, 0.2);
+}
+
+.cv-menu-content h4 {
+    color: var(--primary-green);
+    margin-bottom: 1.5rem;
+    font-family: 'Orbitron', monospace;
+    font-size: 1.2rem;
+}
+
+.cv-menu-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.8rem;
+    width: 100%;
+    padding: 1rem;
+    margin: 0.5rem 0;
+    background: rgba(0, 255, 65, 0.1);
+    border: 1px solid var(--border-green);
+    border-radius: 8px;
+    color: var(--text-white);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.cv-menu-btn:hover {
+    background: rgba(0, 255, 65, 0.2);
+    border-color: var(--primary-green);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0, 255, 65, 0.3);
+}
+
+.cv-menu-btn span {
+    font-size: 1.1em;
+}
+
+.cv-menu-close {
+    position: absolute;
+    top: 0.5rem;
+    right: 0.5rem;
+    background: none;
+    border: none;
+    color: var(--text-gray);
+    font-size: 1.2rem;
+    cursor: pointer;
+    padding: 0.5rem;
+    border-radius: 4px;
+    transition: all 0.3s ease;
+}
+
+.cv-menu-close:hover {
+    background: var(--danger-red);
+    color: white;
+}
+
 /* Container */
 .container {
     max-width: 1200px;
@@ -867,6 +1019,11 @@ footer::before {
         font-size: 0.9rem;
     }
 
+    .cv-view-btn {
+        padding: 0.6rem 1.5rem;
+        font-size: 0.9rem;
+    }
+
     .social-links {
         gap: 1rem;
         margin: 1.5rem 0;
@@ -875,6 +1032,17 @@ footer::before {
     .social-link {
         padding: 0.6rem 1rem;
         font-size: 0.8rem;
+    }
+
+    .cv-generate-btn {
+        padding: 0.6rem 1.5rem;
+        font-size: 0.9rem;
+    }
+    
+    .cv-menu-content {
+        margin: 1rem;
+        min-width: unset;
+        width: calc(100% - 2rem);
     }
 }
 
@@ -917,6 +1085,11 @@ footer::before {
     }
 
     .cv-download-btn {
+        padding: 0.5rem 1rem;
+        font-size: 0.8rem;
+    }
+
+    .cv-view-btn {
         padding: 0.5rem 1rem;
         font-size: 0.8rem;
     }

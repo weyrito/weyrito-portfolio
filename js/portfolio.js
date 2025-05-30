@@ -9,16 +9,15 @@ const TEMPLATES = {
         <h2 id="title">{{personal.title}}</h2>
         <p><strong>Email:</strong> <a href="mailto:{{personal.email}}" target="_blank" id="email">{{personal.email}}</a> | <strong>Téléphone:</strong> <span id="phone">{{personal.phone}}</span></p>
         <div class="header-actions">
-            <a href="{{personal.cv.url}}" download="{{personal.cv.filename}}" class="cv-download-btn">
-                <span class="cv-icon">📄</span> Télécharger CV
-            </a>
+            <button id="view-cv" class="cv-view-btn">
+                <span class="cv-icon">📄</span> Voir CV
+            </button>
             <button id="toggle-terminal" class="terminal-btn">
                 <span class="terminal-icon">></span> Mode Terminal
             </button>
         </div>`,
 
     footer: `
-        <hr>
         <p><strong>{{personal.status}} dans la {{personal.location}}</strong></p>
         <div class="social-links">
             <a href="{{personal.social.github}}" target="_blank" rel="noopener noreferrer" class="social-link">
@@ -44,7 +43,7 @@ const TEMPLATES = {
 const SECTIONS = [
     {
         id: 'about',
-        title: 'À propos de Thomas Fouquet',
+        title: 'À propos',
         render: (data) => `
             <div itemscope itemtype="https://schema.org/Person">
                 <meta itemprop="name" content="Thomas Fouquet">
@@ -79,7 +78,7 @@ const SECTIONS = [
                         <li>Technologies: ${project.technologies.join(', ')}</li>
                         ${Template.list(project.features)}
                     </ul>
-                    ${project.url ? `<a href="${project.url}" target="_blank" class="project-link">Voir le site</a>` : ''}
+                    ${project.url ? `<a href="${project.url}" target="_blank" rel="noopener noreferrer" class="project-link">Voir le site</a>` : ''}
                 </div>`).join('');
             return `<div id="projects-container">${projectsHtml}</div>`;
         }
@@ -107,7 +106,7 @@ const SECTIONS = [
                     if (typeof edu.institution === 'string') {
                         institutionHtml = edu.institution;
                     } else if (edu.institution.url) {
-                        institutionHtml = `<a href="${edu.institution.url}" target="_blank" class="skill-link">${edu.institution.text}</a>`;
+                        institutionHtml = `<a href="${edu.institution.url}" target="_blank" rel="noopener noreferrer" class="skill-link">${edu.institution.text}</a>`;
                     } else {
                         institutionHtml = edu.institution.text;
                     }
@@ -184,6 +183,17 @@ function renderPortfolio() {
     DOM.render('portfolio-footer', Template.compile(TEMPLATES.footer, portfolioData));
 }
 
+function setupCVGenerator() {
+    const viewBtn = DOM.select('#view-cv');
+
+    viewBtn?.addEventListener('click', () => {
+        if (window.CVWebGenerator && portfolioData) {
+            const generator = new CVWebGenerator(portfolioData);
+            generator.generatePDF();
+        }
+    });
+}
+
 function setupTerminalHandlers() {
     const toggleBtn = DOM.select('#toggle-terminal');
     const closeBtn = DOM.select('#close-terminal');
@@ -228,6 +238,7 @@ export async function initializePortfolio() {
     updatePageMeta();
     renderPortfolio();
     setupTerminalHandlers();
+    setupCVGenerator(); // Nouveau
 
     // Make portfolio data globally available for terminal
     window.portfolioData = portfolioData;
