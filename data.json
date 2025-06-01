@@ -87,7 +87,7 @@
   "projects": [
     {
       "title": "Homelab",
-      "type": "Laboratoire personnelle",
+      "type": "Laboratoire personnel",
       "description": "Mise en place d'un homelab pour l'apprentissage et le développement de compétences en cybersécurité, en virtualisation et en administration système/réseau. C'est un terrain de jeu pour moi dans lequel j'héberge des applications selfhost FOSS et j'approfondis mes connaissances en réseau.",
       "technologies": [
         "Proxmox",

@@ -1,0 +1,26 @@
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Orbitron:wght@400;700;900&display=swap');
+
+:root {
+    --primary-green: #00ff41;
+    --secondary-green: #008f11;
+    --dark-bg: #0a0a0a;
+    --darker-bg: #050505;
+    --terminal-bg: #0d1117;
+    --border-green: #00ff4140;
+    --text-green: #00ff41;
+    --text-gray: #8b949e;
+    --text-white: #f0f6fc;
+    --danger-red: #ff4757;
+    --warning-orange: #ffa502;
+    --info-blue: #3742fa;
+    --neon-purple: #8b5cf6;
+    --neon-cyan: #06b6d4;
+    --gradient-cyber: linear-gradient(135deg, var(--primary-green), var(--neon-cyan));
+    --gradient-dark: linear-gradient(135deg, var(--darker-bg), var(--dark-bg));
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
