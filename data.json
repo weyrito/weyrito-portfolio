@@ -262,8 +262,7 @@
   ],
   "terminal": {
     "files": {
-      "README.md": "Portfolio de Thomas Fouquet - Étudiant en cybersécurité\nTapez \"help\" pour voir les commandes disponibles.",
-      "CV.pdf": "CV de Thomas Fouquet - Étudiant en cybersécurité\nUtilisez 'download CV.pdf' pour télécharger le fichier."
+      "README.md": "Portfolio de Thomas Fouquet - Étudiant en cybersécurité\nTapez \"help\" pour voir les commandes disponibles."
     }
   }
 }

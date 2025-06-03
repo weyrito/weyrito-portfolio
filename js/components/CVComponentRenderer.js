@@ -140,7 +140,7 @@ class CVComponentRenderer {
     addProjects(projects, x, y, width) {
         if (this.layoutManager.checkPageOverflow(y + 40)) return y;
         
-        y = this.sectionRenderer.addSection('Projets cles', x, y, width);
+        y = this.sectionRenderer.addSection('Projets clés', x, y, width);
         const availableProjects = projects.slice(0, 2);
         availableProjects.forEach((project, index) => {
             y = this.addProjectItem(project, x, y, width, index, index === availableProjects.length - 1);

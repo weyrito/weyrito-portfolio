@@ -10,8 +10,7 @@ class Terminal {
 
         this.commands = this.initCommands();
         this.files = {
-            'README.md': 'Portfolio de Thomas Fouquet - Étudiant en cybersécurité\nTapez "help" pour voir les commandes disponibles.',
-            'CV.pdf': 'CV de Thomas Fouquet - Étudiant en cybersécurité\nUtilisez \'download CV.pdf\' pour télécharger le fichier.'
+            'README.md': 'Portfolio de Thomas Fouquet - Étudiant en cybersécurité\nTapez "help" pour voir les commandes disponibles.'
         };
 
         this.init();
@@ -34,7 +33,6 @@ class Terminal {
             whoami: () => this.display('thomas'),
             date: () => this.display(new Date().toString()),
             exit: () => this.exitTerminal(),
-            download: (args) => this.downloadFile(args),
         };
     }
 
@@ -86,7 +84,6 @@ Portfolio:
 Fichiers:
   ls          - Lister les fichiers
   cat <file>  - Afficher le contenu d'un fichier
-  download <file> - Télécharger un fichier
 
 Système:
   pwd         - Afficher le répertoire courant
@@ -280,37 +277,6 @@ N'hésitez pas à me contacter pour toute opportunité !`
         }
     }
 
-    downloadFile(args) {
-        if (!args?.length) return this.display('download: missing file operand\nUsage: download <filename>', 'error');
-
-        const filename = args[0];
-        const cvData = this.portfolioData?.personal?.cv;
-
-        if (filename === 'CV.pdf' && cvData) {
-            this.display('🔄 Initialisation du téléchargement...', 'info');
-
-            // Simulate download progress
-            setTimeout(() => {
-                this.display(`📄 Téléchargement de ${cvData.filename} (${cvData.size})`, 'info');
-
-                // Create and trigger download
-                const link = document.createElement('a');
-                link.href = cvData.url;
-                link.download = cvData.filename;
-                link.style.display = 'none';
-                document.body.appendChild(link);
-                link.click();
-                document.body.removeChild(link);
-
-                this.display('✅ Téléchargement terminé avec succès !', 'info');
-            }, 500);
-        } else if (this.files[filename]) {
-            this.display(`download: cannot download '${filename}': not a downloadable file`, 'error');
-        } else {
-            this.display(`download: ${filename}: No such file or directory`, 'error');
-        }
-    }
-
     clearTerminal() {
         this.output.innerHTML = '';
         this.createInputLine();
@@ -351,7 +317,7 @@ N'hésitez pas à me contacter pour toute opportunité !`
                 this.display(`${this.currentPath}$ ${input}`, 'command');
                 this.display(matches.join('  '), 'info');
             }
-        } else if (parts.length >= 2 && ['cat', 'less', 'more', 'head', 'tail', 'download'].includes(parts[0])) {
+        } else if (parts.length >= 2 && ['cat', 'less', 'more', 'head', 'tail'].includes(parts[0])) {
             const partialFile = parts[parts.length - 1];
             const matches = Object.keys(this.files).filter(file => file.startsWith(partialFile));
 
