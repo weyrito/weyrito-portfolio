@@ -2,8 +2,31 @@ import { PortfolioData } from '../types/portfolio';
 
 declare global {
   interface Window {
-    jspdf: any;
+    jspdf: {
+      jsPDF: new (options?: {
+        orientation?: string;
+        unit?: string;
+        format?: string;
+      }) => PDFDocument;
+    };
   }
+}
+
+interface PDFDocument {
+  setFillColor: (...color: number[]) => void;
+  rect: (x: number, y: number, width: number, height: number, style?: string) => void;
+  setFontSize: (size: number) => void;
+  setTextColor: (...color: number[]) => void;
+  setFont: (fontName: string, fontStyle?: string) => void;
+  text: (text: string | string[], x: number, y: number, options?: { align?: string }) => void;
+  link: (x: number, y: number, width: number, height: number, options: { url: string }) => void;
+  splitTextToSize: (text: string, maxWidth: number) => string[];
+  getTextWidth: (text: string) => number;
+  setDrawColor: (...color: number[]) => void;
+  setLineWidth: (width: number) => void;
+  line: (x1: number, y1: number, x2: number, y2: number) => void;
+  roundedRect: (x: number, y: number, width: number, height: number, rx: number, ry: number, style?: string) => void;
+  save: (filename: string) => void;
 }
 
 interface CVConfig {
@@ -33,7 +56,7 @@ interface CVColors {
 
 export class CVGenerator {
   private data: PortfolioData;
-  private doc: any;
+  private doc!: PDFDocument; 
   private config: CVConfig;
   private colors: CVColors;
 
@@ -101,6 +124,9 @@ export class CVGenerator {
   }
 
   private generateContent(): void {
+    if (!this.doc) {
+      throw new Error('Document not initialized');
+    }
     this.addHeader();
     this.generateLeftColumn();
     this.generateRightColumn();
@@ -108,6 +134,8 @@ export class CVGenerator {
   }
 
   private addHeader(): void {
+    if (!this.doc) return;
+    
     // Background header
     this.doc.setFillColor(...this.colors.primary);
     this.doc.rect(0, 0, this.config.pageWidth, this.config.headerHeight, 'F');
@@ -158,10 +186,13 @@ export class CVGenerator {
   }
 
   private addClickableLink(url: string, x: number, y: number, width: number, height: number): void {
+    if (!this.doc) return;
     this.doc.link(x, y, width, height, { url: url });
   }
 
   private generateLeftColumn(): void {
+    if (!this.doc) return;
+    
     const leftX = this.config.margin;
     const leftWidth = this.config.leftColumnWidth;
     let leftY = this.config.headerHeight + this.config.margin;
@@ -176,7 +207,7 @@ export class CVGenerator {
 
     // Compétences
     leftY = this.addSection('COMPÉTENCES', leftX, leftY, leftWidth);
-    Object.values(this.data.skills).forEach((skill: any) => {
+    Object.values(this.data.skills).forEach((skill) => {
       if (skill.excludeFromCV) return;
       
       this.doc.setFontSize(8);
@@ -185,7 +216,7 @@ export class CVGenerator {
       this.doc.text(skill.title, leftX, leftY);
       leftY += 4;
 
-      skill.items.forEach((item: any) => {
+      skill.items.forEach((item) => {
         const itemText = typeof item === 'string' ? item : item.text;
         this.doc.setFontSize(7);
         this.doc.setTextColor(...this.colors.text);
@@ -264,6 +295,8 @@ export class CVGenerator {
   }
 
   private generateRightColumn(): void {
+    if (!this.doc) return;
+    
     const rightX = this.config.margin + this.config.leftColumnWidth + this.config.columnGap;
     const rightWidth = this.config.rightColumnWidth;
     let rightY = this.config.headerHeight + this.config.margin;
@@ -409,6 +442,8 @@ export class CVGenerator {
   }
 
   private addSection(title: string, x: number, y: number, width: number): number {
+    if (!this.doc) return y;
+    
     this.doc.setFontSize(10);
     this.doc.setTextColor(...this.colors.primary);
     this.doc.setFont('helvetica', 'bold');
@@ -423,6 +458,8 @@ export class CVGenerator {
   }
 
   private addFooter(): void {
+    if (!this.doc) return;
+    
     const footerY = this.config.pageHeight - this.config.footerHeight + 8;
     
     // Ligne de séparation
@@ -451,6 +488,10 @@ export class CVGenerator {
   }
 
   private saveDocument(): void {
+    if (!this.doc) {
+      throw new Error('Document not initialized');
+    }
+    
     const timestamp = new Date().toISOString().slice(0, 10);
     const fileName = `${this.data.personal.name.replace(/\s+/g, '_')}_CV_${timestamp}.pdf`;
     this.doc.save(fileName);

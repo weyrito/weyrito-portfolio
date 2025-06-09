@@ -47,9 +47,6 @@ const Layout: React.FC<LayoutProps> = ({
         <meta name="twitter:image" content="https://opengraph.b-cdn.net/production/images/c80841ac-e8c4-486c-84f4-336471b97767.png?token=1Wqs8ZsYSGQtnwH9yTrxM3EJDrni46q2VpUlwTVzK3w&height=630&width=1200&expires=33284441152" />
         <meta name="twitter:image:alt" content="Portfolio Thomas Fouquet - Cybersécurité" />
         
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet" />
       </Head>
       
       <div className="min-h-screen bg-cyber-darker font-mono text-text-white">

@@ -39,7 +39,7 @@ const HomePage: React.FC = () => {
           )}
         </CVGeneratorComponent>
         
-        <main className="max-w-6xl mx-auto px-4">
+        <main className="max-w-7xl mx-auto px-2 sm:px-4 lg:px-6">
           <AboutSection personal={portfolioData.personal} />
           <SkillsSection skills={portfolioData.skills} />
           <ProjectsSection projects={portfolioData.projects} />
