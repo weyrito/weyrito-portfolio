@@ -3,6 +3,7 @@ import Layout from '../components/Layout';
 import Header from '../components/Header';
 import Terminal from '../components/Terminal';
 import Footer from '../components/Footer';
+import CookieConsent from '../components/CookieConsent';
 import CVGeneratorComponent from '../components/CVGenerator';
 import { 
   AboutSection, 
@@ -12,7 +13,7 @@ import {
   EducationSection,
   LanguagesSection,
   InterestsSection 
-} from '../components/Sections';
+} from '../components/sections';
 import { portfolioData } from '../data/portfolio';
 
 const HomePage: React.FC = () => {
@@ -56,6 +57,8 @@ const HomePage: React.FC = () => {
           isOpen={isTerminalOpen}
           onClose={handleCloseTerminal}
         />
+        
+        <CookieConsent />
       </div>
     </Layout>
   );

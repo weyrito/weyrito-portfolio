@@ -1,4 +1,5 @@
 import React from 'react';
+import Link from 'next/link';
 import { PersonalInfo } from '../types/portfolio';
 
 interface FooterProps {
@@ -44,19 +45,36 @@ const Footer: React.FC<FooterProps> = ({ personal }) => {
         </a>
       </div>
       
-      <p className="mb-4 text-sm sm:text-base px-2">Portfolio mis à jour en mai 2025</p>
-      <p className="text-xs sm:text-sm text-text-gray px-2 break-words">
-        📄 Ce projet est sous{' '}
-        <a
-          href="https://github.com/weyrito/weyrito-portfolio/blob/main/LICENSE"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="text-cyber-cyan hover:underline"
-        >
-          licence MIT
-        </a>
-        {' '}- Code source libre et réutilisable
-      </p>
+      <p className="mb-4 text-sm sm:text-base px-2">Portfolio mis à jour en janvier 2025</p>
+      
+      <div className="text-xs sm:text-sm text-text-gray px-2 space-y-2">
+        <div className="flex flex-wrap justify-center gap-4">
+          <Link 
+            href="/privacy" 
+            className="text-cyber-cyan hover:text-primary-green hover:underline transition-colors"
+          >
+            🔒 Politique de confidentialité
+          </Link>
+          <span className="text-primary-green">•</span>
+          <span title="Aucun cookie de tracking">🍪 Sans cookies</span>
+          <span className="text-primary-green">•</span>
+          <span title="Conforme au Règlement Général sur la Protection des Données">✅ RGPD</span>
+        </div>
+        
+        <p className="break-words">
+          📄 Ce projet est sous{' '}
+          <a
+            href="https://github.com/weyrito/weyrito-portfolio/blob/main/LICENSE"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-cyber-cyan hover:underline"
+          >
+            licence MIT
+          </a>
+          {' '}- Code source libre et réutilisable
+        </p>
+        
+      </div>
     </footer>
   );
 };
