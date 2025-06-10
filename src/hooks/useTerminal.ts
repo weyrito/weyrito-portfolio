@@ -20,6 +20,7 @@ export const useTerminal = ({ portfolioData, isOpen, onClose }: UseTerminalProps
   const [cursorPosition, setCursorPosition] = useState(0);
   const [suggestions, setSuggestions] = useState<string[]>([]);
   const [showSuggestions, setShowSuggestions] = useState(false);
+  const [isMobileKeyboardOpen, setIsMobileKeyboardOpen] = useState(false);
   const outputRef = useRef<HTMLDivElement>(null);
   const terminalRef = useRef<HTMLDivElement>(null);
 
@@ -148,11 +149,37 @@ export const useTerminal = ({ portfolioData, isOpen, onClose }: UseTerminalProps
     setCursorPosition(0);
   }, [portfolioData, addPromptLine, onClose]);
 
+  // Détection améliorée du clavier mobile
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    
+    const detectMobileKeyboard = () => {
+      const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+      if (!isMobile) return;
+
+      const viewportHeight = window.visualViewport?.height || window.innerHeight;
+      const windowHeight = window.innerHeight;
+      const heightDiff = windowHeight - viewportHeight;
+      
+      setIsMobileKeyboardOpen(heightDiff > 150);
+    };
+
+    if (window.visualViewport) {
+      window.visualViewport.addEventListener('resize', detectMobileKeyboard);
+      return () => window.visualViewport.removeEventListener('resize', detectMobileKeyboard);
+    } else {
+      window.addEventListener('resize', detectMobileKeyboard);
+      return () => window.removeEventListener('resize', detectMobileKeyboard);
+    }
+  }, []);
+
   // Gestionnaire d'événements clavier simplifié
   const handleKeyDown = useCallback((e: KeyboardEvent) => {
     if (!isOpen || isLoading) return;
 
-    // Gérer seulement les touches spéciales qui ne sont pas gérées par l'input HTML
+    // Prévenir le comportement par défaut pour la plupart des touches sur mobile afin d'éviter des comportements indésirables
+    const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+    
     switch (e.key) {
       case 'Tab':
         e.preventDefault();
@@ -178,25 +205,10 @@ export const useTerminal = ({ portfolioData, isOpen, onClose }: UseTerminalProps
         break;
 
       case 'ArrowUp':
-        e.preventDefault();
-        if (commandHistory.length > 0) {
-          const newIndex = historyIndex === -1 ? commandHistory.length - 1 : Math.max(0, historyIndex - 1);
-          setHistoryIndex(newIndex);
-          const newInput = commandHistory[newIndex];
-          setCurrentInput(newInput);
-          setCursorPosition(newInput.length);
-        }
-        break;
-
-      case 'ArrowDown':
-        e.preventDefault();
-        if (historyIndex !== -1) {
-          const newIndex = historyIndex + 1;
-          if (newIndex >= commandHistory.length) {
-            setHistoryIndex(-1);
-            setCurrentInput('');
-            setCursorPosition(0);
-          } else {
+        if (!isMobile || !isMobileKeyboardOpen) {
+          e.preventDefault();
+          if (commandHistory.length > 0) {
+            const newIndex = historyIndex === -1 ? commandHistory.length - 1 : Math.max(0, historyIndex - 1);
             setHistoryIndex(newIndex);
             const newInput = commandHistory[newIndex];
             setCurrentInput(newInput);
@@ -205,8 +217,27 @@ export const useTerminal = ({ portfolioData, isOpen, onClose }: UseTerminalProps
         }
         break;
 
+      case 'ArrowDown':
+        if (!isMobile || !isMobileKeyboardOpen) {
+          e.preventDefault();
+          if (historyIndex !== -1) {
+            const newIndex = historyIndex + 1;
+            if (newIndex >= commandHistory.length) {
+              setHistoryIndex(-1);
+              setCurrentInput('');
+              setCursorPosition(0);
+            } else {
+              setHistoryIndex(newIndex);
+              const newInput = commandHistory[newIndex];
+              setCurrentInput(newInput);
+              setCursorPosition(newInput.length);
+            }
+          }
+        }
+        break;
+
       default:
-        if (e.ctrlKey) {
+        if (e.ctrlKey && !isMobile) {
           e.preventDefault();
           switch (e.key) {
             case 'l':
@@ -231,7 +262,7 @@ export const useTerminal = ({ portfolioData, isOpen, onClose }: UseTerminalProps
         }
         break;
     }
-  }, [currentInput, commandHistory, historyIndex, isOpen, isLoading, handleCommand, addPromptLine, handleTabCompletion]); // Suppression de cursorPosition des dépendances
+  }, [currentInput, commandHistory, historyIndex, isOpen, isLoading, handleCommand, addPromptLine, handleTabCompletion, isMobileKeyboardOpen]);
 
   // Auto-scroll
   useEffect(() => {

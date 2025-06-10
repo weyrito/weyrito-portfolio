@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 import { TerminalProps } from '../types/terminal';
 import { useTerminal } from '../hooks/useTerminal';
 
@@ -17,42 +17,90 @@ const Terminal: React.FC<TerminalProps> = ({ portfolioData, isOpen, onClose }) =
   } = useTerminal({ portfolioData, isOpen, onClose });
 
   const hiddenInputRef = useRef<HTMLInputElement>(null);
+  const [isMobile, setIsMobile] = useState(false);
+  const [keyboardHeight, setKeyboardHeight] = useState(0);
+  const [showMobileKeyboard, setShowMobileKeyboard] = useState(false);
 
-  // Auto-focus sur l'input caché quand le terminal s'ouvre
+  // Detect mobile device
   useEffect(() => {
-    if (isOpen && hiddenInputRef.current) {
-      hiddenInputRef.current.focus();
+    const checkMobile = () => {
+      const isMobileDevice = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) 
+        || window.innerWidth <= 768;
+      setIsMobile(isMobileDevice);
+    };
+    
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
+  // Handle virtual keyboard on mobile
+  useEffect(() => {
+    if (!isMobile) return;
+
+    const handleResize = () => {
+      const viewportHeight = window.visualViewport?.height || window.innerHeight;
+      const windowHeight = window.innerHeight;
+      const heightDiff = windowHeight - viewportHeight;
+      
+      if (heightDiff > 150) { // Keyboard is likely open
+        setKeyboardHeight(heightDiff);
+        setShowMobileKeyboard(true);
+      } else {
+        setKeyboardHeight(0);
+        setShowMobileKeyboard(false);
+      }
+    };
+
+    if (window.visualViewport) {
+      window.visualViewport.addEventListener('resize', handleResize);
+      return () => window.visualViewport.removeEventListener('resize', handleResize);
+    } else {
+      window.addEventListener('resize', handleResize);
+      return () => window.removeEventListener('resize', handleResize);
     }
-  }, [isOpen]);
+  }, [isMobile]);
 
-  // Maintenir le focus sur l'input caché
+  // Auto-focus on mobile with better handling
   useEffect(() => {
-    if (isOpen) {
-      const handleFocusLoss = () => {
-        if (hiddenInputRef.current && document.activeElement !== hiddenInputRef.current) {
+    if (isOpen && hiddenInputRef.current && isMobile) {
+      // Delay focus on mobile to avoid issues with keyboard
+      setTimeout(() => {
+        hiddenInputRef.current?.focus();
+      }, 300);
+    }
+  }, [isOpen, isMobile]);
+
+  // Enhanced focus management for mobile
+  useEffect(() => {
+    if (isOpen && isMobile) {
+      const handleTouchStart = (e: TouchEvent) => {
+        // Only focus if touching the terminal area, not buttons
+        const target = e.target as HTMLElement;
+        if (!target.closest('button') && hiddenInputRef.current) {
           setTimeout(() => {
             hiddenInputRef.current?.focus();
-          }, 0);
+          }, 100);
         }
       };
 
-      // Remettre le focus périodiquement
-      const focusInterval = setInterval(() => {
-        if (hiddenInputRef.current && document.activeElement !== hiddenInputRef.current) {
-          hiddenInputRef.current.focus();
+      const handleVisibilityChange = () => {
+        if (!document.hidden && hiddenInputRef.current) {
+          setTimeout(() => {
+            hiddenInputRef.current?.focus();
+          }, 100);
         }
-      }, 100);
+      };
 
-      document.addEventListener('focusout', handleFocusLoss);
-      document.addEventListener('click', handleFocusLoss);
+      document.addEventListener('touchstart', handleTouchStart);
+      document.addEventListener('visibilitychange', handleVisibilityChange);
 
       return () => {
-        clearInterval(focusInterval);
-        document.removeEventListener('focusout', handleFocusLoss);
-        document.removeEventListener('click', handleFocusLoss);
+        document.removeEventListener('touchstart', handleTouchStart);
+        document.removeEventListener('visibilitychange', handleVisibilityChange);
       };
     }
-  }, [isOpen]);
+  }, [isOpen, isMobile]);
 
   // Synchroniser l'input caché avec l'état du terminal
   useEffect(() => {
@@ -75,15 +123,48 @@ const Terminal: React.FC<TerminalProps> = ({ portfolioData, isOpen, onClose }) =
     setCursorPosition(target.selectionStart || 0);
   };
 
+  // Mobile command shortcuts
+  const mobileCommands = [
+    { cmd: 'help', icon: '❓', label: 'Aide' },
+    { cmd: 'about', icon: '👨‍💻', label: 'À propos' },
+    { cmd: 'skills', icon: '🛠️', label: 'Compétences' },
+    { cmd: 'projects', icon: '📁', label: 'Projets' },
+    { cmd: 'contact', icon: '📞', label: 'Contact' },
+    { cmd: 'clear', icon: '🧹', label: 'Effacer' }
+  ];
+
+  const handleMobileCommand = (command: string) => {
+    if (hiddenInputRef.current) {
+      setCurrentInput(command);
+      setCursorPosition(command.length);
+      hiddenInputRef.current.focus();
+      
+      // Simulate Enter key press
+      setTimeout(() => {
+        const enterEvent = new KeyboardEvent('keydown', {
+          key: 'Enter',
+          code: 'Enter',
+          keyCode: 13,
+          which: 13,
+          bubbles: true
+        });
+        hiddenInputRef.current?.dispatchEvent(enterEvent);
+      }, 100);
+    }
+  };
+
   if (!isOpen) return null;
 
   return (
     <div 
-      className="fixed inset-0 bg-cyber-darker z-50 flex flex-col" 
+      className={`fixed inset-0 bg-cyber-darker z-50 flex flex-col ${isMobile ? 'touch-manipulation' : ''}`}
       ref={terminalRef}
-      onClick={() => hiddenInputRef.current?.focus()}
+      style={isMobile && showMobileKeyboard ? { 
+        height: `calc(100vh - ${keyboardHeight}px)`,
+        minHeight: '400px'
+      } : {}}
     >
-      {/* Input caché pour capturer les frappes */}
+      {/* Enhanced input for mobile */}
       <input
         ref={hiddenInputRef}
         type="text"
@@ -101,18 +182,21 @@ const Terminal: React.FC<TerminalProps> = ({ portfolioData, isOpen, onClose }) =
         autoCapitalize="off"
         autoCorrect="off"
         spellCheck="false"
+        inputMode="text"
+        enterKeyHint="send"
       />
 
-      {/* Header */}
+      {/* Enhanced Header */}
       <div className="bg-cyber-terminal border-b-2 border-cyber-border p-2 sm:p-3 flex items-center justify-between flex-shrink-0">
-        <div className="flex gap-2">
+        <div className="flex gap-1 sm:gap-2">
           <span className="w-2 h-2 sm:w-3 sm:h-3 rounded-full bg-status-danger"></span>
           <span className="w-2 h-2 sm:w-3 sm:h-3 rounded-full bg-status-warning"></span>
           <span className="w-2 h-2 sm:w-3 sm:h-3 rounded-full bg-primary-green"></span>
         </div>
-        <div className="text-text-gray font-mono text-xs sm:text-sm flex items-center gap-2 min-w-0">
-          <span className="hidden sm:inline truncate">terminal@thomas</span>
-          <span className="sm:hidden text-xs">term</span>
+        
+        <div className="text-text-gray font-mono text-xs flex items-center gap-1 sm:gap-2 min-w-0">
+          <span className="hidden xs:inline truncate">terminal@thomas</span>
+          <span className="xs:hidden text-xs">term</span>
           {isLoading && (
             <div className="flex gap-1">
               <span className="w-1 h-1 bg-primary-green rounded-full animate-pulse"></span>
@@ -120,34 +204,63 @@ const Terminal: React.FC<TerminalProps> = ({ portfolioData, isOpen, onClose }) =
               <span className="w-1 h-1 bg-primary-green rounded-full animate-pulse" style={{ animationDelay: '0.4s' }}></span>
             </div>
           )}
-          {lines.length > 1 && (
-            <span className="text-xs text-primary-green opacity-70" title="Session restaurée">
-              💾
-            </span>
+          {isMobile && showMobileKeyboard && (
+            <span className="text-xs text-primary-green" title="Clavier virtuel actif">⌨️</span>
           )}
-          <span className="text-xs text-primary-green opacity-70" title="Saisie automatique active">
-            ⌨️
-          </span>
+          {lines.length > 1 && (
+            <span className="text-xs text-primary-green opacity-70" title="Session restaurée">💾</span>
+          )}
         </div>
+        
         <button
           onClick={onClose}
-          className="text-text-gray hover:bg-status-danger hover:text-white px-2 py-1 rounded transition-colors text-sm flex-shrink-0"
+          className="text-text-gray hover:bg-status-danger hover:text-white px-2 py-1 rounded transition-colors text-sm flex-shrink-0 min-w-[32px] min-h-[32px] flex items-center justify-center"
           aria-label="Fermer le terminal"
         >
           ✕
         </button>
       </div>
+
+      {/* Mobile Command Shortcuts */}
+      {isMobile && (
+        <div className="bg-cyber-terminal/90 border-b border-cyber-border/50 p-2 flex-shrink-0">
+          <div className="flex gap-1 overflow-x-auto pb-1">
+            {mobileCommands.map((item) => (
+              <button
+                key={item.cmd}
+                onClick={() => handleMobileCommand(item.cmd)}
+                className="flex-shrink-0 bg-cyber-dark/60 border border-cyber-border/50 rounded px-2 py-1 text-xs flex flex-col items-center gap-1 hover:bg-primary-green/10 hover:border-primary-green transition-all duration-200"
+                style={{ minWidth: '50px' }}
+              >
+                <span className="text-sm">{item.icon}</span>
+                <span className="text-[10px] text-text-gray">{item.label}</span>
+              </button>
+            ))}
+          </div>
+        </div>
+      )}
       
       {/* Terminal Content */}
       <div 
-        className="flex-1 p-2 sm:p-4 overflow-hidden flex flex-col cursor-text"
-        onClick={() => hiddenInputRef.current?.focus()}
+        className="flex-1 p-2 sm:p-4 overflow-hidden flex flex-col"
+        onClick={() => {
+          if (isMobile && hiddenInputRef.current) {
+            hiddenInputRef.current.focus();
+          }
+        }}
+        style={{ 
+          touchAction: 'manipulation',
+          WebkitUserSelect: 'none',
+          userSelect: 'none'
+        }}
       >
         <div
           ref={outputRef}
           className="flex-1 overflow-y-auto font-mono text-[10px] xs:text-xs sm:text-sm leading-tight sm:leading-relaxed scroll-smooth"
-          style={{ scrollBehavior: 'smooth' }}
-          onClick={() => hiddenInputRef.current?.focus()}
+          style={{ 
+            scrollBehavior: 'smooth',
+            WebkitOverflowScrolling: 'touch'
+          }}
         >
           {lines.map((line, index) => (
             <div key={index} className="min-h-[1.2rem] sm:min-h-[1.4rem] mb-1">
@@ -195,25 +308,35 @@ const Terminal: React.FC<TerminalProps> = ({ portfolioData, isOpen, onClose }) =
                     <div className="ml-1 flex items-center min-w-0 flex-1">
                       <div className="break-all text-[10px] xs:text-xs sm:text-sm flex items-center">
                         <span>{currentInput.slice(0, cursorPosition)}</span>
-                        <span className="inline-block w-[2px] h-3 xs:h-4 sm:h-5 bg-primary-green animate-[blink_1s_infinite] flex-shrink-0"></span>
+                        <span className={`inline-block w-[2px] h-3 xs:h-4 sm:h-5 bg-primary-green flex-shrink-0 ${isMobile ? 'animate-pulse' : 'animate-[blink_1s_infinite]'}`}></span>
                         <span>{currentInput.slice(cursorPosition)}</span>
                       </div>
                     </div>
                   </div>
                   
-                  {/* Suggestions d'auto-complétion */}
+                  {/* Enhanced suggestions for mobile */}
                   {showSuggestions && suggestions.length > 0 && (
-                    <div className="mt-2 ml-2 text-[10px] xs:text-xs">
+                    <div className="mt-2 ml-1 sm:ml-2 text-[10px] xs:text-xs">
                       <div className="text-cyber-cyan mb-1">💡 Suggestions:</div>
-                      <div className="grid grid-cols-1 xs:grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-1 sm:gap-2">
+                      <div className={`grid gap-1 sm:gap-2 ${isMobile ? 'grid-cols-2' : 'grid-cols-1 xs:grid-cols-2 sm:grid-cols-3 lg:grid-cols-4'}`}>
                         {suggestions.map((suggestion, i) => (
-                          <div key={i} className="text-text-gray hover:text-primary-green transition-colors px-1 sm:px-2 py-1 bg-cyber-terminal/50 rounded border border-cyber-border/30 text-[10px] xs:text-xs truncate">
+                          <button
+                            key={i}
+                            onClick={() => {
+                              if (isMobile) {
+                                setCurrentInput(suggestion + ' ');
+                                setCursorPosition(suggestion.length + 1);
+                                hiddenInputRef.current?.focus();
+                              }
+                            }}
+                            className={`text-left text-text-gray hover:text-primary-green transition-colors px-1 sm:px-2 py-1 bg-cyber-terminal/50 rounded border border-cyber-border/30 text-[10px] xs:text-xs truncate ${isMobile ? 'active:bg-primary-green/20' : ''}`}
+                          >
                             {suggestion}
-                          </div>
+                          </button>
                         ))}
                       </div>
                       <div className="text-text-gray mt-1 text-[10px] xs:text-xs opacity-70">
-                        Appuyez sur Tab pour compléter
+                        {isMobile ? 'Touchez pour compléter' : 'Appuyez sur Tab pour compléter'}
                       </div>
                     </div>
                   )}
@@ -223,14 +346,32 @@ const Terminal: React.FC<TerminalProps> = ({ portfolioData, isOpen, onClose }) =
           ))}
         </div>
         
-        {/* Mobile instructions */}
-        <div className="sm:hidden mt-2 text-[10px] text-text-gray opacity-70 border-t border-cyber-border/30 pt-2">
-          <div className="flex justify-between items-center">
-            <span>Terminal actif - Tapez directement</span>
-            <span>help pour aide</span>
+        {/* Enhanced Mobile instructions */}
+        {isMobile && (
+          <div className="mt-2 text-[10px] text-text-gray opacity-70 border-t border-cyber-border/30 pt-2 flex-shrink-0">
+            <div className="flex justify-between items-center">
+              <span>
+                {showMobileKeyboard ? '⌨️ Clavier actif' : '👆 Touchez pour taper'}
+              </span>
+              <div className="flex gap-2">
+                {!showMobileKeyboard && (
+                  <button
+                    onClick={() => hiddenInputRef.current?.focus()}
+                    className="text-primary-green hover:text-cyber-cyan"
+                  >
+                    📝 Taper
+                  </button>
+                )}
+              </div>
+            </div>
           </div>
-        </div>
+        )}
       </div>
+
+      {/* Mobile bottom padding when keyboard is open */}
+      {isMobile && showMobileKeyboard && (
+        <div style={{ height: '10px' }} className="flex-shrink-0"></div>
+      )}
     </div>
   );
 };

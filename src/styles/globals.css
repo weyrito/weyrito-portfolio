@@ -70,10 +70,78 @@ body {
   .container {
     padding: 0 1rem;
   }
+  
+  /* Prevent zoom on input focus on iOS */
+  input, textarea, select {
+    font-size: 16px;
+  }
+  
+  /* Better touch targets */
+  button, a, input[type="button"], input[type="submit"] {
+    min-height: 44px;
+    min-width: 44px;
+  }
+  
+  /* Terminal specific mobile styles */
+  .terminal-mobile {
+    -webkit-user-select: none;
+    user-select: none;
+    -webkit-touch-callout: none;
+    -webkit-tap-highlight-color: transparent;
+  }
+  
+  /* Smooth scrolling for mobile terminal */
+  .terminal-output {
+    -webkit-overflow-scrolling: touch;
+    scroll-behavior: smooth;
+  }
+  
+  /* Mobile keyboard adjustments */
+  .mobile-keyboard-open {
+    padding-bottom: env(keyboard-inset-height, 0px);
+  }
 }
 
 @media (max-width: 480px) {
   .container {
     padding: 0 0.5rem;
+  }
+  
+  /* Even smaller screens need more compact layouts */
+  .terminal-compact {
+    font-size: 10px;
+    line-height: 1.2;
+  }
+}
+
+/* Improved mobile touch interactions */
+@media (hover: none) and (pointer: coarse) {
+  /* Mobile/touch devices */
+  .hover\:scale-105:hover {
+    transform: scale(1.02);
+  }
+  
+  .hover\:shadow-xl:hover {
+    box-shadow: 0 10px 25px -3px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Better active states for touch */
+  button:active, 
+  .btn:active {
+    transform: scale(0.98);
+    transition: transform 0.1s ease;
+  }
+}
+
+/* Virtual keyboard support */
+@supports (height: 100dvh) {
+  .mobile-terminal {
+    height: 100dvh;
+  }
+}
+
+@supports (padding-bottom: env(keyboard-inset-height)) {
+  .mobile-keyboard-padding {
+    padding-bottom: env(keyboard-inset-height);
   }
 }
