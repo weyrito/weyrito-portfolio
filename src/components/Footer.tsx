@@ -45,7 +45,7 @@ const Footer: React.FC<FooterProps> = ({ personal }) => {
         </a>
       </div>
       
-      <p className="mb-4 text-sm sm:text-base px-2">Portfolio mis à jour en janvier 2025</p>
+      <p className="mb-4 text-sm sm:text-base px-2">Portfolio mis à jour en juin 2025</p>
       
       <div className="text-xs sm:text-sm text-text-gray px-2 space-y-2">
         <div className="flex flex-wrap justify-center gap-4">

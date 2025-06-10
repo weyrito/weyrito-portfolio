@@ -39,8 +39,8 @@ const Layout: React.FC<LayoutProps> = ({
         <meta name="data-collection" content="minimal" />
         <meta name="tracking" content="none" />
         
-        <link rel="icon" type="image/svg+xml" href="https://icons.getbootstrap.com/assets/icons/terminal-fill.svg" />
-        <link rel="apple-touch-icon" href="https://icons.getbootstrap.com/assets/icons/terminal-fill.svg" />
+        <link rel="icon" type="image/svg+xml" href="/terminal-fill.svg" />
+        <link rel="apple-touch-icon" href="/terminal-fill.svg" />
         <link rel="canonical" href={canonicalUrl} />
         
         {/* Facebook Meta Tags */}
