@@ -1,6 +1,7 @@
 import React from 'react';
 import Head from 'next/head';
 import { Analytics } from "@vercel/analytics/next"
+import { SpeedInsights } from '@vercel/speed-insights/next';
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -83,6 +84,8 @@ const Layout: React.FC<LayoutProps> = ({
       
       <div className="min-h-screen bg-cyber-darker font-mono text-text-white">
         {children}
+        <Analytics />
+        <SpeedInsights />
       </div>
     </>
   );
