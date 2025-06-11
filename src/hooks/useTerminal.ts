@@ -166,7 +166,7 @@ export const useTerminal = ({ portfolioData, isOpen, onClose }: UseTerminalProps
 
     if (window.visualViewport) {
       window.visualViewport.addEventListener('resize', detectMobileKeyboard);
-      return () => window.visualViewport.removeEventListener('resize', detectMobileKeyboard);
+      return () => window.visualViewport?.removeEventListener('resize', detectMobileKeyboard);
     } else {
       window.addEventListener('resize', detectMobileKeyboard);
       return () => window.removeEventListener('resize', detectMobileKeyboard);

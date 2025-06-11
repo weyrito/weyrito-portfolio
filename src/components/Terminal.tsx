@@ -54,7 +54,7 @@ const Terminal: React.FC<TerminalProps> = ({ portfolioData, isOpen, onClose }) =
 
     if (window.visualViewport) {
       window.visualViewport.addEventListener('resize', handleResize);
-      return () => window.visualViewport.removeEventListener('resize', handleResize);
+      return () => window.visualViewport?.removeEventListener('resize', handleResize);
     } else {
       window.addEventListener('resize', handleResize);
       return () => window.removeEventListener('resize', handleResize);
