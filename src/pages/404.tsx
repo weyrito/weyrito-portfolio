@@ -33,7 +33,7 @@ const Custom404: React.FC = () => {
                 className="inline-flex items-center justify-center px-6 py-3 bg-primary-green text-cyber-dark font-mono font-bold text-sm rounded-lg hover:bg-primary-green/90 hover:scale-105 transition-all duration-300 shadow-lg shadow-primary-green/30"
               >
                 <span className="mr-2">🏠</span>
-                Retour à l'accueil
+                Retour à l&apos;accueil
               </Link>
             </div>
             

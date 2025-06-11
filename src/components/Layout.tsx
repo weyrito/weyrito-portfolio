@@ -1,6 +1,6 @@
 import React from 'react';
 import Head from 'next/head';
-
+import { Analytics } from "@vercel/analytics/next"
 
 interface LayoutProps {
   children: React.ReactNode;
