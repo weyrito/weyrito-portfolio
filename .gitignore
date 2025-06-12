@@ -92,3 +92,5 @@ pids
 
 # Yarn Integrity file
 .yarn-integrity
+
+/public/sitemap.xml

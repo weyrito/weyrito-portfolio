@@ -123,36 +123,6 @@ const Terminal: React.FC<TerminalProps> = ({ portfolioData, isOpen, onClose }) =
     setCursorPosition(target.selectionStart || 0);
   };
 
-  // Mobile command shortcuts
-  const mobileCommands = [
-    { cmd: 'help', icon: '❓', label: 'Aide' },
-    { cmd: 'about', icon: '👨‍💻', label: 'À propos' },
-    { cmd: 'skills', icon: '🛠️', label: 'Compétences' },
-    { cmd: 'projects', icon: '📁', label: 'Projets' },
-    { cmd: 'contact', icon: '📞', label: 'Contact' },
-    { cmd: 'clear', icon: '🧹', label: 'Effacer' }
-  ];
-
-  const handleMobileCommand = (command: string) => {
-    if (hiddenInputRef.current) {
-      setCurrentInput(command);
-      setCursorPosition(command.length);
-      hiddenInputRef.current.focus();
-      
-      // Simulate Enter key press
-      setTimeout(() => {
-        const enterEvent = new KeyboardEvent('keydown', {
-          key: 'Enter',
-          code: 'Enter',
-          keyCode: 13,
-          which: 13,
-          bubbles: true
-        });
-        hiddenInputRef.current?.dispatchEvent(enterEvent);
-      }, 100);
-    }
-  };
-
   if (!isOpen) return null;
 
   return (
@@ -215,31 +185,13 @@ const Terminal: React.FC<TerminalProps> = ({ portfolioData, isOpen, onClose }) =
         <button
           onClick={onClose}
           className="text-text-gray hover:bg-status-danger hover:text-white px-2 py-1 rounded transition-colors text-sm flex-shrink-0 min-w-[32px] min-h-[32px] flex items-center justify-center"
-          aria-label="Fermer le terminal"
+          aria-label="Retourner à l'accueil"
+          title="Retourner à l'accueil"
         >
-          ✕
+          ←
         </button>
       </div>
 
-      {/* Mobile Command Shortcuts */}
-      {isMobile && (
-        <div className="bg-cyber-terminal/90 border-b border-cyber-border/50 p-2 flex-shrink-0">
-          <div className="flex gap-1 overflow-x-auto pb-1">
-            {mobileCommands.map((item) => (
-              <button
-                key={item.cmd}
-                onClick={() => handleMobileCommand(item.cmd)}
-                className="flex-shrink-0 bg-cyber-dark/60 border border-cyber-border/50 rounded px-2 py-1 text-xs flex flex-col items-center gap-1 hover:bg-primary-green/10 hover:border-primary-green transition-all duration-200"
-                style={{ minWidth: '50px' }}
-              >
-                <span className="text-sm">{item.icon}</span>
-                <span className="text-[10px] text-text-gray">{item.label}</span>
-              </button>
-            ))}
-          </div>
-        </div>
-      )}
-      
       {/* Terminal Content */}
       <div 
         className="flex-1 p-2 sm:p-4 overflow-hidden flex flex-col"
@@ -346,26 +298,7 @@ const Terminal: React.FC<TerminalProps> = ({ portfolioData, isOpen, onClose }) =
           ))}
         </div>
         
-        {/* Enhanced Mobile instructions */}
-        {isMobile && (
-          <div className="mt-2 text-[10px] text-text-gray opacity-70 border-t border-cyber-border/30 pt-2 flex-shrink-0">
-            <div className="flex justify-between items-center">
-              <span>
-                {showMobileKeyboard ? '⌨️ Clavier actif' : '👆 Touchez pour taper'}
-              </span>
-              <div className="flex gap-2">
-                {!showMobileKeyboard && (
-                  <button
-                    onClick={() => hiddenInputRef.current?.focus()}
-                    className="text-primary-green hover:text-cyber-cyan"
-                  >
-                    📝 Taper
-                  </button>
-                )}
-              </div>
-            </div>
-          </div>
-        )}
+        
       </div>
 
       {/* Mobile bottom padding when keyboard is open */}
