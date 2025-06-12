@@ -123,12 +123,31 @@ const Terminal: React.FC<TerminalProps> = ({ portfolioData, isOpen, onClose }) =
     setCursorPosition(target.selectionStart || 0);
   };
 
+  // S'assurer que l'input caché a le focus
+  useEffect(() => {
+    if (isOpen && hiddenInputRef.current) {
+      hiddenInputRef.current.focus();
+    }
+  }, [isOpen]);
+
+  // Forcer le focus sur l'input caché quand on clique dans le terminal
+  const handleTerminalClick = (e: React.MouseEvent) => {
+    if ((e.target as HTMLElement).closest('button')) {
+      return;
+    }
+    
+    if (hiddenInputRef.current) {
+      hiddenInputRef.current.focus();
+    }
+  };
+
   if (!isOpen) return null;
 
   return (
     <div 
       className={`fixed inset-0 bg-cyber-darker z-50 flex flex-col ${isMobile ? 'touch-manipulation' : ''}`}
       ref={terminalRef}
+      onClick={handleTerminalClick} // Ajouter le gestionnaire de clic ici sur tout le conteneur
       style={isMobile && showMobileKeyboard ? { 
         height: `calc(100vh - ${keyboardHeight}px)`,
         minHeight: '400px'
@@ -141,6 +160,14 @@ const Terminal: React.FC<TerminalProps> = ({ portfolioData, isOpen, onClose }) =
         value={currentInput}
         onChange={handleInputChange}
         onSelect={handleInputSelect}
+        onBlur={(e) => {
+          // Empêcher la perte de focus sauf si on clique sur le bouton de fermeture
+          if (!e.relatedTarget?.closest('button')) {
+            setTimeout(() => {
+              hiddenInputRef.current?.focus();
+            }, 10);
+          }
+        }}
         className="absolute opacity-0 pointer-events-none -z-10"
         style={{ 
           position: 'absolute',
@@ -154,6 +181,7 @@ const Terminal: React.FC<TerminalProps> = ({ portfolioData, isOpen, onClose }) =
         spellCheck="false"
         inputMode="text"
         enterKeyHint="send"
+        tabIndex={-1} // Empêcher la navigation par tab
       />
 
       {/* Enhanced Header */}
@@ -183,7 +211,10 @@ const Terminal: React.FC<TerminalProps> = ({ portfolioData, isOpen, onClose }) =
         </div>
         
         <button
-          onClick={onClose}
+          onClick={(e) => {
+            e.stopPropagation(); 
+            onClose();
+          }}
           className="text-text-gray hover:bg-status-danger hover:text-white px-2 py-1 rounded transition-colors text-sm flex-shrink-0 min-w-[32px] min-h-[32px] flex items-center justify-center"
           aria-label="Retourner à l'accueil"
           title="Retourner à l'accueil"
@@ -195,11 +226,6 @@ const Terminal: React.FC<TerminalProps> = ({ portfolioData, isOpen, onClose }) =
       {/* Terminal Content */}
       <div 
         className="flex-1 p-2 sm:p-4 overflow-hidden flex flex-col"
-        onClick={() => {
-          if (isMobile && hiddenInputRef.current) {
-            hiddenInputRef.current.focus();
-          }
-        }}
         style={{ 
           touchAction: 'manipulation',
           WebkitUserSelect: 'none',

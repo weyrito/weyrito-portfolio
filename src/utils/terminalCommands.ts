@@ -14,10 +14,6 @@ export const createHelpMessage = (): string => {
   languages   - Langues parlées
   contact     - Informations de contact
 
-📁 Fichiers:
-  ls          - Lister les fichiers
-  cat <file>  - Afficher le contenu d'un fichier
-
 ⚙️  Système:
   pwd         - Afficher le répertoire courant
   whoami      - Afficher l'utilisateur
@@ -53,26 +49,19 @@ export const executeCommand = (input: string, portfolioData: PortfolioData): str
         .map(skill => {
           const items = skill.items.map(item => {
             if (typeof item === 'string') {
-              return `    ▶ ${item}`;
+              return `  - ${item}`;
             } else {
-              return `    ▶ ${item.text}${item.url ? ` [🔗 ${item.url}]` : ''}`;
+              return `  - ${item.text}`;
             }
           }).join('\n');
-          return `🛡️  ${skill.title}:\n${items}`;
+          return `${skill.title}:\n${items}`;
         }).join('\n\n');
     
     case 'projects':
       return portfolioData.projects
         .filter(project => !project.excludeFromCV)
-        .map((project, i) => {
-          const icons = ['🥊', '🌐', '🌱'];
-          const icon = icons[i] || '📁';
-          return `${icon} ${project.title}
-   📊 Type: ${project.type}
-   🔧 Technologies: ${project.technologies.join(', ')}
-   ${project.url ? `🔗 URL: ${project.url}` : ''}
-   ${project.features.map(f => `   ✅ ${f}`).join('\n')}`;
-        }).join('\n\n');
+        .map(project => `🚀 ${project.title} (${project.type})\n📝 ${project.description}\n💻 Technologies: ${project.technologies.join(', ')}\n🔗 ${project.url || 'URL bientôt disponible'}`)
+        .join('\n\n');
     
     case 'experience':
       return portfolioData.experience
@@ -122,21 +111,7 @@ export const executeCommand = (input: string, portfolioData: PortfolioData): str
   • LinkedIn: ${portfolioData.personal.social.linkedin}
 
 💡 N'hésitez pas à me contacter pour toute opportunité !`;
-    
-    case 'ls':
-      return `📁 Contenu du répertoire:
 
-drwxr-xr-x  thomas  thomas  4096  README.md
--rw-r--r--  thomas  thomas  2048  portfolio.json
--rw-r--r--  thomas  thomas  1024  skills.txt
--rw-r--r--  thomas  thomas   512  contact.info
-
-💡 Utilisez 'cat <filename>' pour afficher le contenu
-🔄 Utilisez Tab pour l'auto-complétion des noms de fichiers`;
-    
-    case 'cat':
-      return handleCatCommand(args, portfolioData);
-    
     case 'pwd':
       return '/home/thomas/portfolio';
     

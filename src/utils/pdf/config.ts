@@ -1,4 +1,4 @@
-import { CVConfig, CVColors } from './types';
+import { CVConfig, CVColors } from '../../types/pdf';
 
 export const CV_CONFIG: CVConfig = {
   pageWidth: 210,
