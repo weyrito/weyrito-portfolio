@@ -6,8 +6,6 @@ const CONSENT_KEY = 'thomas-portfolio-consent';
 const CookieConsent: React.FC = () => {
   const [showConsent, setShowConsent] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
-  const [waitingTime, setWaitingTime] = useState(0);
-  const [showPatientEgg, setShowPatientEgg] = useState(false);
 
   useEffect(() => {
     // Vérifier si le consentement a déjà été donné
@@ -16,33 +14,14 @@ const CookieConsent: React.FC = () => {
       setTimeout(() => {
         setShowConsent(true);
         setIsVisible(true);
-        
-        // Start patience counter
-        const startTime = Date.now();
-        const interval = setInterval(() => {
-          const elapsed = Math.floor((Date.now() - startTime) / 1000);
-          setWaitingTime(elapsed);
-          
-          // Easter egg for patient users
-          if (elapsed >= 30 && !showPatientEgg) {
-            setShowPatientEgg(true);
-            // Add CTF flag
-            const flags = JSON.parse(localStorage.getItem('ctf_flags') || '{}');
-            flags['flag{patience_virtue}'] = true;
-            localStorage.setItem('ctf_flags', JSON.stringify(flags));
-          }
-        }, 1000);
-        
-        return () => clearInterval(interval);
       }, 2000);
     }
-  }, [showPatientEgg]);
+  }, []);
 
   const handleAccept = () => {
     localStorage.setItem(CONSENT_KEY, JSON.stringify({
       accepted: true,
-      date: new Date().toISOString(),
-      waitingTime: waitingTime
+      date: new Date().toISOString()
     }));
     setIsVisible(false);
     setTimeout(() => setShowConsent(false), 300);
@@ -51,8 +30,7 @@ const CookieConsent: React.FC = () => {
   const handleDecline = () => {
     localStorage.setItem(CONSENT_KEY, JSON.stringify({
       accepted: false,
-      date: new Date().toISOString(),
-      waitingTime: waitingTime
+      date: new Date().toISOString()
     }));
     setIsVisible(false);
     setTimeout(() => setShowConsent(false), 300);
@@ -66,20 +44,6 @@ const CookieConsent: React.FC = () => {
     }`}>
       <div className="bg-cyber-terminal/95 backdrop-blur-xl border-t-2 border-cyber-border p-4 sm:p-6">
         <div className="max-w-6xl mx-auto">
-          {showPatientEgg && (
-            <div className="mb-4 p-3 bg-primary-green/20 border border-primary-green rounded-lg">
-              <div className="flex items-center gap-2 text-sm">
-                <span className="text-xl">🏆</span>
-                <div>
-                  <span className="text-primary-green font-bold">Achievement Unlocked: Patient Observer!</span>
-                  <div className="text-xs text-text-gray">
-                    🚩 CTF Flag: flag{`{patience_virtue}`} - You waited {waitingTime} seconds!
-                  </div>
-                </div>
-              </div>
-            </div>
-          )}
-          
           <div className="flex flex-col lg:flex-row items-start lg:items-center gap-4">
             <div className="flex-1">
               <div className="flex items-start gap-3 mb-3">
@@ -92,12 +56,6 @@ const CookieConsent: React.FC = () => {
                     Ce site ne utilise <strong>aucun cookie de tracking</strong> ou de publicité. 
                     Seules les préférences du terminal sont stockées localement dans votre navigateur 
                     pour améliorer votre expérience.
-                    {waitingTime > 10 && (
-                      <span className="block mt-2 text-xs text-cyber-cyan">
-                        ⏰ Vous attendez depuis {waitingTime} secondes... 
-                        {waitingTime > 20 && "Patience is a virtue! 🧘‍♂️"}
-                      </span>
-                    )}
                   </p>
                 </div>
               </div>
