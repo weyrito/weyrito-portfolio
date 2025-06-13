@@ -4,7 +4,6 @@ import {
   UseTerminalProps, 
   UseTerminalReturn,
   TERMINAL_COMMANDS,
-  TERMINAL_FILES,
   TERMINAL_PROMPT
 } from '../types/terminal';
 import { executeCommand } from '../utils/terminalCommands';
@@ -24,17 +23,19 @@ export const useTerminal = ({ portfolioData, isOpen, onClose }: UseTerminalProps
   const outputRef = useRef<HTMLDivElement>(null);
   const terminalRef = useRef<HTMLDivElement>(null);
 
-  // Auto-complétion
+  // Supprimer les constantes liées aux fichiers si elles ne sont plus utilisées
+  const TERMINAL_COMMANDS = [
+    'help', 'about', 'skills', 'projects', 'experience', 
+    'education', 'languages', 'contact', 'pwd', 'whoami', 
+    'date', 'clear', 'exit'
+  ];
+
+  // Auto-complétion simplifiée
   const getCompletions = useCallback((input: string): string[] => {
-    const [cmd, ...args] = input.trim().split(' ');
+    const [cmd] = input.trim().split(' ');
     
-    if (args.length === 0) {
-      return TERMINAL_COMMANDS.filter(command => command.startsWith(cmd.toLowerCase()));
-    } else if (cmd.toLowerCase() === 'cat' && args.length === 1) {
-      return TERMINAL_FILES.filter(file => file.toLowerCase().startsWith(args[0].toLowerCase()));
-    }
-    
-    return [];
+    // Seules les commandes principales sont autocompletées
+    return TERMINAL_COMMANDS.filter(command => command.startsWith(cmd.toLowerCase()));
   }, []);
 
   // Gestion de l'auto-complétion avec Tab

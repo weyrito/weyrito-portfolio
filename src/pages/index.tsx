@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React from 'react';
+import { useRouter } from 'next/router';
 import Layout from '../components/Layout';
 import Header from '../components/Header';
-import Terminal from '../components/Terminal';
 import Footer from '../components/Footer';
 import CookieConsent from '../components/CookieConsent';
 import CVGeneratorComponent from '../components/CVGenerator';
@@ -17,14 +17,10 @@ import {
 import { portfolioData } from '../data/portfolio';
 
 const HomePage: React.FC = () => {
-  const [isTerminalOpen, setIsTerminalOpen] = useState(false);
+  const router = useRouter();
 
   const handleOpenTerminal = () => {
-    setIsTerminalOpen(true);
-  };
-
-  const handleCloseTerminal = () => {
-    setIsTerminalOpen(false);
+    router.push('/terminal');
   };
 
   return (
@@ -51,13 +47,6 @@ const HomePage: React.FC = () => {
         </main>
         
         <Footer personal={portfolioData.personal} />
-        
-        <Terminal 
-          portfolioData={portfolioData}
-          isOpen={isTerminalOpen}
-          onClose={handleCloseTerminal}
-        />
-        
         <CookieConsent />
       </div>
     </Layout>

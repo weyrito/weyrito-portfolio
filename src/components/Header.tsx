@@ -52,9 +52,10 @@ const Header: React.FC<HeaderProps> = ({ personal, onOpenTerminal, onGenerateCV 
         <button
           onClick={onOpenTerminal}
           className="w-full sm:w-auto group bg-gradient-to-r from-primary-green to-cyber-cyan border-2 border-primary-green text-cyber-dark px-6 sm:px-8 py-3 rounded-lg font-mono font-bold text-sm cursor-pointer transition-all duration-300 uppercase tracking-wide shadow-lg shadow-primary-green/30 hover:scale-105 hover:shadow-xl hover:shadow-primary-green/50 inline-flex items-center justify-center relative overflow-hidden"
+          title="Ouvrir le terminal "
         >
           <span className="mr-2 text-lg font-bold">&gt;</span>
-          <span className="text-xs sm:text-sm">Mode Terminal</span>
+          <span className="text-xs sm:text-sm">Terminal</span>
         </button>
       </div>
     </header>

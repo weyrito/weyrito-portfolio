@@ -6,14 +6,9 @@ export const portfolioData: PortfolioData = {
     title: "Étudiant en Bachelor informatique - Spécialisé en cybersécurité",
     email: "alternance@thomas-fouquet.fr",
     phone: "06 72 63 54 51",
-    location: "Région Grand-Est",
+    location: "Région Grand-Est - Strasbourg",
     status: "En recherche d'alternance",
-    about: "Étudiant en informatique passionné par la cybersécurité, orienté vers les technologies souveraines et les enjeux stratégiques nationaux. Je m'intéresse particulièrement à la sécurité des systèmes d'information, la souveraineté technologique et la protection des données sensibles. Mon objectif est de contribuer à renforcer la souveraineté numérique française en développant des solutions de cybersécurité pour les secteurs d'importance vitale comme la santé, la défense, la justice, etc.",
-    cv: {
-      url: "assets/thomas-fouquet-cv.pdf",
-      filename: "Thomas_Fouquet_CV.pdf",
-      size: "245 KB"
-    },
+    about: "Étudiant en informatique passionné par la cybersécurité, orienté vers les technologies souveraines et les enjeux stratégiques nationaux. Je m'intéresse particulièrement à la sécurité des systèmes d'information, la souveraineté technologique et la protection des données sensibles. Mon objectif est de contribuer à renforcer la souveraineté numérique française en développant des solutions de cybersécurité pour des secteurs comme la santé, la défense, la justice, etc.",
     social: {
       github: "https://github.com/weyrito",
       linkedin: "https://www.linkedin.com/in/thomas-fouquet/",
@@ -156,13 +151,20 @@ export const portfolioData: PortfolioData = {
   ],
   education: [
     {
-      title: "Bachelor informatique 3",
+      title: "Bachelor informatique 3 (futur)",
       period: "2025 - 2026",
       institution: {
         text: "École 18.06",
         url: "https://www.18.06.fr"
       },
-      specialization: "",
+      subjects: [
+        "Méthodes Agile",
+        "Cloud(s)",
+        "DevOps",
+        "Réseaux informatiques (Sécurité avancée • Stormshield CSNE)",
+        "OSINT (Open Source Intelligence)"
+      ],
+      specialization: "Administrateur d’infrastructures sécurisées",
       excludeFromCV: false
     },
     {
@@ -172,6 +174,18 @@ export const portfolioData: PortfolioData = {
         text: "École Hexagone",
         url: "https://www.ecole-hexagone.com/fr/fr/"
       },
+      subjects: [
+        "Réseaux avancés",
+        "Sécurité des réseaux",
+        "Systèmes d'information",
+        "Architecture des ordinateurs",
+        "Administration Linux",
+        "Virtualisation",
+        "Développement web (PHP/Symfony, React.js)",
+        "Manipulation de données SQL",
+        "Programmation systèmes (C/C++)",
+        "Mathématiques appliquées"
+      ],
       specialization: "",
       excludeFromCV: false
     }
@@ -195,7 +209,7 @@ export const portfolioData: PortfolioData = {
   ],
   interests: [
     {
-      text: "Sports de combat, plusieurs combats dans diverses disciplines (MMA, boxe anglaise, jiu-jitsu brésilien)",
+      text: "Sports de combat, plusieurs combats dans diverses disciplines (MMA, boxe anglaise, Jiu-Jitsu brésilien)",
       excludeFromCV: false
     },
     {

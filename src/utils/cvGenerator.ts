@@ -1,5 +1,5 @@
 import { PortfolioData } from '../types/portfolio';
-import { PDFDocument } from './pdf/types';
+import { PDFDocument } from '../types/pdf';
 import { CV_CONFIG, CV_COLORS } from './pdf/config';
 import { CVSectionGenerator } from './pdf/sections';
 

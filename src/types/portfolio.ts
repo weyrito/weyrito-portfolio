@@ -16,11 +16,6 @@ export interface PersonalInfo {
   location: string;
   status: string;
   about: string;
-  cv: {
-    url: string;
-    filename: string;
-    size: string;
-  };
   social: {
     github: string;
     linkedin: string;
