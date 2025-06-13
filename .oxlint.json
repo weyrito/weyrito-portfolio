@@ -1,0 +1,20 @@
+{
+  "rules": {
+    "correctness": "error",
+    "suspicious": "warn", 
+    "perf": "warn",
+    "style": "warn"
+  },
+  "ignore": [
+    "node_modules",
+    ".next",
+    "out",
+    "dist",
+    "build"
+  ],
+  "plugins": [
+    "react",
+    "typescript",
+    "nextjs"
+  ]
+}

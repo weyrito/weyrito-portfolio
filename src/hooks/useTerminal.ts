@@ -105,7 +105,7 @@ export const useTerminal = ({ portfolioData, isOpen, onClose }: UseTerminalProps
     setShowSuggestions(false);
     
     setLines(prev => {
-      const newLines = [...prev.filter(line => !line.isCurrentInput)];
+      const newLines = prev.filter(line => !line.isCurrentInput);
       newLines.push({
         type: 'input',
         content: TERMINAL_PROMPT + command,
@@ -192,7 +192,7 @@ export const useTerminal = ({ portfolioData, isOpen, onClose }: UseTerminalProps
           handleCommand(currentInput.trim());
         } else {
           setLines(prev => {
-            const newLines = [...prev.filter(line => !line.isCurrentInput)];
+            const newLines = prev.filter(line => !line.isCurrentInput);
             newLines.push({
               type: 'input',
               content: TERMINAL_PROMPT,
@@ -248,7 +248,7 @@ export const useTerminal = ({ portfolioData, isOpen, onClose }: UseTerminalProps
               setCurrentInput('');
               setCursorPosition(0);
               setLines(prev => {
-                const newLines = [...prev.filter(line => !line.isCurrentInput)];
+                const newLines = prev.filter(line => !line.isCurrentInput);
                 newLines.push({
                   type: 'input',
                   content: TERMINAL_PROMPT + currentInput + '^C',
