@@ -73,33 +73,35 @@ const Terminal: React.FC<TerminalProps> = ({ portfolioData, isOpen, onClose }) =
 
   // Enhanced focus management for mobile
   useEffect(() => {
-    if (isOpen && isMobile) {
-      const handleTouchStart = (e: TouchEvent) => {
-        // Only focus if touching the terminal area, not buttons
-        const target = e.target as HTMLElement;
-        if (!target.closest('button') && hiddenInputRef.current) {
-          setTimeout(() => {
-            hiddenInputRef.current?.focus();
-          }, 100);
-        }
-      };
-
-      const handleVisibilityChange = () => {
-        if (!document.hidden && hiddenInputRef.current) {
-          setTimeout(() => {
-            hiddenInputRef.current?.focus();
-          }, 100);
-        }
-      };
-
-      document.addEventListener('touchstart', handleTouchStart);
-      document.addEventListener('visibilitychange', handleVisibilityChange);
-
-      return () => {
-        document.removeEventListener('touchstart', handleTouchStart);
-        document.removeEventListener('visibilitychange', handleVisibilityChange);
-      };
+    if (!isOpen || !isMobile) {
+      return;
     }
+
+    const handleTouchStart = (e: TouchEvent) => {
+      // Only focus if touching the terminal area, not buttons
+      const target = e.target as HTMLElement;
+      if (!target.closest('button') && hiddenInputRef.current) {
+        setTimeout(() => {
+          hiddenInputRef.current?.focus();
+        }, 100);
+      }
+    };
+
+    const handleVisibilityChange = () => {
+      if (!document.hidden && hiddenInputRef.current) {
+        setTimeout(() => {
+          hiddenInputRef.current?.focus();
+        }, 100);
+      }
+    };
+
+    document.addEventListener('touchstart', handleTouchStart);
+    document.addEventListener('visibilitychange', handleVisibilityChange);
+
+    return () => {
+      document.removeEventListener('touchstart', handleTouchStart);
+      document.removeEventListener('visibilitychange', handleVisibilityChange);
+    };
   }, [isOpen, isMobile]);
 
   // Synchroniser l'input caché avec l'état du terminal

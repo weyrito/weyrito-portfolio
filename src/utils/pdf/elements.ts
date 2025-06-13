@@ -1,9 +1,8 @@
-import { PDFDocument, CVConfig, CVColors } from '../../types/pdf';
+import { PDFDocument, CVColors } from '../../types/pdf';
 
 export class PDFElementRenderer {
   constructor(
     private doc: PDFDocument,
-    private config: CVConfig,
     private colors: CVColors
   ) {}
 

@@ -1,5 +1,4 @@
 import { PortfolioData } from '../types/portfolio';
-import { TERMINAL_FILES } from '../types/terminal';
 
 export const createHelpMessage = (): string => {
   return `🔧 Commandes disponibles:
@@ -29,7 +28,11 @@ export const createHelpMessage = (): string => {
 };
 
 export const executeCommand = (input: string, portfolioData: PortfolioData): string => {
-  const [cmd, ...args] = input.trim().split(' ');
+  const [cmd] = input.trim().split(' ');
+  
+  if (!cmd) {
+    return '💡 Tapez une commande ou "help" pour voir les commandes disponibles';
+  }
 
   switch (cmd.toLowerCase()) {
     case 'help':
@@ -143,72 +146,6 @@ export const executeCommand = (input: string, portfolioData: PortfolioData): str
   }
 };
 
-const handleCatCommand = (args: string[], portfolioData: PortfolioData): string => {
-  if (!args[0]) {
-    return `❌ Usage: cat <filename>
-
-📁 Fichiers disponibles:
-${TERMINAL_FILES.map(file => `  • ${file}`).join('\n')}
-
-💡 Utilisez Tab pour l'auto-complétion`;
-  }
-  
-  switch (args[0].toLowerCase()) {
-    case 'readme.md':
-      return `# Portfolio Thomas Fouquet
-
-Étudiant en cybersécurité passionné par les technologies souveraines.
-
-## Objectif
-Contribuer à renforcer la souveraineté numérique française.
-
-## Compétences clés
-- Cybersécurité & analyse de vulnérabilités
-- Administration système Linux
-- Développement web moderne
-
-💡 Tapez 'help' pour explorer mes compétences !`;
-    
-    case 'portfolio.json':
-      return `{
-  "name": "${portfolioData.personal.name}",
-  "status": "${portfolioData.personal.status}",
-  "specialization": "Cybersécurité",
-  "projects_count": ${portfolioData.projects.length},
-  "skills_categories": ${Object.keys(portfolioData.skills).length}
-}`;
-
-    case 'skills.txt':
-      return `📋 COMPÉTENCES TECHNIQUES
-
-${Object.values(portfolioData.skills)
-  .filter(skill => !skill.excludeFromCV)
-  .map(skill => `${skill.title}:\n${skill.items.map(item => 
-    typeof item === 'string' ? `  - ${item}` : `  - ${item.text}`
-  ).join('\n')}`).join('\n\n')}`;
-
-    case 'contact.info':
-      return `📞 CONTACT INFORMATION
-
-Name: ${portfolioData.personal.name}
-Email: ${portfolioData.personal.email}
-Phone: ${portfolioData.personal.phone}
-Location: ${portfolioData.personal.location}
-Status: ${portfolioData.personal.status}
-
-Social Links:
-- GitHub: ${portfolioData.personal.social.github}
-- LinkedIn: ${portfolioData.personal.social.linkedin}`;
-    
-    default:
-      return `❌ cat: ${args[0]}: Fichier introuvable
-
-📁 Fichiers disponibles:
-${TERMINAL_FILES.map(file => `  • ${file}`).join('\n')}
-
-💡 Utilisez Tab pour l'auto-complétion`;
-  }
-};
 
 const handleUnknownCommand = (cmd: string): string => {
   const cmdSuggestions = ['help', 'about', 'skills', 'projects'].filter(c => c.startsWith(cmd.toLowerCase())).slice(0, 3);

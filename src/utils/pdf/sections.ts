@@ -11,7 +11,7 @@ export class CVSectionGenerator {
     private config: CVConfig,
     private colors: CVColors
   ) {
-    this.renderer = new PDFElementRenderer(doc, config, colors);
+    this.renderer = new PDFElementRenderer(doc, colors);
   }
 
   addHeader(): void {
@@ -100,7 +100,7 @@ export class CVSectionGenerator {
           fontSize: 7,
           color: isClickable ? this.colors.link : this.colors.text,
           isClickable,
-          url: isClickable && typeof item === 'object' ? item.url : undefined
+          ...(isClickable && typeof item === 'object' && item.url ? { url: item.url } : {})
         });
         leftY += 3.5;
       });
