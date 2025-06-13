@@ -94,3 +94,5 @@ pids
 .yarn-integrity
 
 /public/sitemap.xml
+
+.vscode/
