@@ -1,13 +1,17 @@
 import React from 'react';
 import { PortfolioData } from '../../types/portfolio';
+import { useLanguage } from '../../contexts/LanguageContext';
 import Section from './Section';
 
 interface ExperienceSectionProps {
   experience: PortfolioData['experience'];
 }
 
-const ExperienceSection: React.FC<ExperienceSectionProps> = ({ experience }) => (
-  <Section title="Expériences">
+const ExperienceSection: React.FC<ExperienceSectionProps> = ({ experience }) => {
+  const { t } = useLanguage();
+  
+  return (
+    <Section title={t('experience')}>
     <div className="space-y-4 sm:space-y-6">
       {experience.map((exp, index) => (
         <div key={index} className="border-l-4 border-cyber-cyan pl-4 sm:pl-6 hover:border-primary-green transition-colors duration-300">
@@ -32,7 +36,8 @@ const ExperienceSection: React.FC<ExperienceSectionProps> = ({ experience }) => 
         </div>
       ))}
     </div>
-  </Section>
-);
+    </Section>
+  );
+};
 
 export default ExperienceSection;

@@ -2,16 +2,53 @@ import { PortfolioData } from '../../types/portfolio';
 import { PDFDocument, CVConfig, CVColors } from '../../types/pdf';
 import { PDFElementRenderer } from './elements';
 
+type Language = 'fr' | 'en';
+
+// Traductions pour le CV
+const cvTranslations = {
+  fr: {
+    profile: 'PROFIL',
+    skills: 'COMPÉTENCES',
+    links: 'LIENS',
+    experience: 'EXPÉRIENCES PROFESSIONNELLES',
+    education: 'FORMATIONS',
+    projects: 'PROJETS CLÉS',
+    languages: 'LANGUES',
+    interests: 'CENTRES D\'INTÉRÊT',
+    contact: 'CONTACT',
+    technologies: 'Technologies',
+    period: 'Période',
+    specialization: 'Spécialisation'
+  },
+  en: {
+    profile: 'PROFILE',
+    skills: 'SKILLS',
+    links: 'LINKS',
+    experience: 'PROFESSIONAL EXPERIENCE',
+    education: 'EDUCATION',
+    projects: 'KEY PROJECTS',
+    languages: 'LANGUAGES',
+    interests: 'INTERESTS',
+    contact: 'CONTACT',
+    technologies: 'Technologies',
+    period: 'Period',
+    specialization: 'Specialization'
+  }
+};
+
 export class CVSectionGenerator {
   private renderer: PDFElementRenderer;
+  private t: (key: string) => string;
 
   constructor(
     private doc: PDFDocument,
     private data: PortfolioData,
     private config: CVConfig,
-    private colors: CVColors
+    private colors: CVColors,
+    private language: Language = 'fr'
   ) {
     this.renderer = new PDFElementRenderer(doc, colors);
+    this.t = (key: string) => cvTranslations[this.language][key as keyof typeof cvTranslations.fr] || key;
   }
 
   addHeader(): void {
@@ -75,13 +112,13 @@ export class CVSectionGenerator {
     let leftY = this.config.headerHeight + this.config.margin;
 
     // Profil
-    leftY = this.renderer.addSection('PROFIL', leftX, leftY, leftWidth);
+    leftY = this.renderer.addSection(this.t('profile'), leftX, leftY, leftWidth);
     const profileLines = this.doc.splitTextToSize(this.data.personal.about, leftWidth);
     this.renderer.addTextWithStyles(profileLines.join('\n'), leftX, leftY, { fontSize: 8 });
     leftY += profileLines.length * 3.5 + 10;
 
     // Compétences
-    leftY = this.renderer.addSection('COMPÉTENCES', leftX, leftY, leftWidth);
+    leftY = this.renderer.addSection(this.t('skills'), leftX, leftY, leftWidth);
     Object.values(this.data.skills).forEach((skill) => {
       if (skill.excludeFromCV) return;
       
@@ -109,7 +146,7 @@ export class CVSectionGenerator {
 
     // Liens sociaux
     leftY += 10;
-    leftY = this.renderer.addSection('LIENS', leftX, leftY, leftWidth);
+    leftY = this.renderer.addSection(this.t('links'), leftX, leftY, leftWidth);
     
     // GitHub et LinkedIn
     const socialLinks = [
@@ -134,7 +171,7 @@ export class CVSectionGenerator {
     let rightY = this.config.headerHeight + this.config.margin;
 
     // Expériences
-    rightY = this.renderer.addSection('EXPÉRIENCES PROFESSIONNELLES', rightX, rightY, rightWidth);
+    rightY = this.renderer.addSection(this.t('experience'), rightX, rightY, rightWidth);
     this.data.experience.forEach((exp) => {
       if (exp.excludeFromCV) return;
       
@@ -156,7 +193,7 @@ export class CVSectionGenerator {
     });
 
     // Formations
-    rightY = this.renderer.addSection('FORMATIONS', rightX, rightY, rightWidth);
+    rightY = this.renderer.addSection(this.t('education'), rightX, rightY, rightWidth);
     this.data.education.forEach((edu) => {
       if (edu.excludeFromCV) return;
       
@@ -195,7 +232,7 @@ export class CVSectionGenerator {
 
     // Projets
     if (this.data.projects.length > 0) {
-      rightY = this.renderer.addSection('PROJETS CLÉS', rightX, rightY, rightWidth);
+      rightY = this.renderer.addSection(this.t('projects'), rightX, rightY, rightWidth);
       const availableProjects = this.data.projects.filter(p => !p.excludeFromCV).slice(0, 2);
       
       availableProjects.forEach((project) => {
@@ -239,7 +276,7 @@ export class CVSectionGenerator {
 
     // Langues
     if (this.data.languages.length > 0) {
-      rightY = this.renderer.addSection('LANGUES', rightX, rightY, rightWidth);
+      rightY = this.renderer.addSection(this.t('languages'), rightX, rightY, rightWidth);
       this.data.languages.forEach((lang) => {
         if (lang.excludeFromCV) return;
         

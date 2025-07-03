@@ -1,16 +1,17 @@
 import React from 'react';
 import { CVGenerator } from '../utils/cvGenerator';
-import { PortfolioData } from '../types/portfolio';
+import { useLanguage } from '../contexts/LanguageContext';
 
 interface CVGeneratorProps {
-  portfolioData: PortfolioData;
   children: (generateCV: () => Promise<void>) => React.ReactNode;
 }
 
-const CVGeneratorComponent: React.FC<CVGeneratorProps> = ({ portfolioData, children }) => {
+const CVGeneratorComponent: React.FC<CVGeneratorProps> = ({ children }) => {
+  const { portfolioData, language } = useLanguage();
+  
   const generateCV = async (): Promise<void> => {
     try {
-      const generator = new CVGenerator(portfolioData);
+      const generator = new CVGenerator(portfolioData, language);
       await generator.generatePDF();
       
       // Notification de succès

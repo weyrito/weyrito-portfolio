@@ -1,36 +1,29 @@
 import React from 'react';
-import { useRouter } from 'next/router';
 import Layout from '../components/Layout';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
-import CookieConsent from '../components/CookieConsent';
 import CVGeneratorComponent from '../components/CVGenerator';
-import { 
-  AboutSection, 
-  SkillsSection, 
-  ProjectsSection, 
-  ExperienceSection, 
+import CookieConsent from '../components/CookieConsent';
+import {
+  AboutSection,
+  SkillsSection,
+  ProjectsSection,
+  ExperienceSection,
   EducationSection,
   LanguagesSection,
-  InterestsSection 
+  InterestsSection
 } from '../components/sections';
-import { portfolioData } from '../data/portfolio';
+import { useLanguage } from '../contexts/LanguageContext';
 
 const HomePage: React.FC = () => {
-  const router = useRouter();
-
-  const handleOpenTerminal = () => {
-    router.push('/terminal');
-  };
+  const { portfolioData } = useLanguage();
 
   return (
     <Layout>
       <div className="min-h-screen bg-cyber-darker">
-        <CVGeneratorComponent portfolioData={portfolioData}>
+        <CVGeneratorComponent>
           {(generateCV) => (
             <Header 
-              personal={portfolioData.personal}
-              onOpenTerminal={handleOpenTerminal}
               onGenerateCV={generateCV}
             />
           )}

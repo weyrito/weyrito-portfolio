@@ -1,16 +1,19 @@
 import React from 'react';
 import Link from 'next/link';
 import { PersonalInfo } from '../types/portfolio';
+import { useLanguage } from '../contexts/LanguageContext';
 
 interface FooterProps {
   personal: PersonalInfo;
 }
 
 const Footer: React.FC<FooterProps> = ({ personal }) => {
+  const { t } = useLanguage();
+  
   return (
     <footer className="text-center p-6 sm:p-8 md:p-12 bg-gradient-to-br from-cyber-darker to-cyber-dark border-t-2 border-cyber-border mt-8 sm:mt-12 md:mt-16 relative">
       <p className="text-lg sm:text-xl font-bold mb-6 sm:mb-8 px-2 break-words">
-        <strong>{personal.status} dans la {personal.location}</strong>
+        <strong>{personal.status} {t('statusLocation')} {personal.location}</strong>
       </p>
       
       <div className="flex flex-col sm:flex-row justify-center gap-3 sm:gap-4 md:gap-8 mb-6 sm:mb-8 px-4">
@@ -45,7 +48,7 @@ const Footer: React.FC<FooterProps> = ({ personal }) => {
         </a>
       </div>
       
-      <p className="mb-4 text-sm sm:text-base px-2">Portfolio mis à jour en juin 2025</p>
+      <p className="mb-4 text-sm sm:text-base px-2">{t('portfolioUpdated')}</p>
       
       <div className="text-xs sm:text-sm text-text-gray px-2 space-y-2">
         <div className="flex flex-wrap justify-center gap-4">
@@ -53,25 +56,25 @@ const Footer: React.FC<FooterProps> = ({ personal }) => {
             href="/privacy" 
             className="text-cyber-cyan hover:text-primary-green hover:underline transition-colors"
           >
-            🔒 Politique de confidentialité
+            🔒 {t('privacyPolicy')}
           </Link>
           <span className="text-primary-green">•</span>
-          <span title="Aucun cookie de tracking">🍪 Sans cookies</span>
+          <span title={t('noCookiesTitle')}>🍪 {t('noCookies')}</span>
           <span className="text-primary-green">•</span>
-          <span title="Conforme au Règlement Général sur la Protection des Données">✅ RGPD</span>
+          <span title={t('gdprTitle')}>✅ {t('gdprCompliant')}</span>
         </div>
         
         <p className="break-words">
-          📄 Ce projet est sous{' '}
+          {t('thisProjectUnder')}{' '}
           <a
             href="https://github.com/weyrito/weyrito-portfolio/blob/main/LICENSE"
             target="_blank"
             rel="noopener noreferrer"
             className="text-cyber-cyan hover:underline"
           >
-            licence MIT
+            {t('mitLicense')}
           </a>
-          {' '}- Code source libre et réutilisable
+          {' '}- {t('sourceCodeFree')}
         </p>
         
       </div>

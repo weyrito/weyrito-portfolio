@@ -3,13 +3,17 @@ import { PDFDocument } from '../types/pdf';
 import { CV_CONFIG, CV_COLORS } from './pdf/config';
 import { CVSectionGenerator } from './pdf/sections';
 
+type Language = 'fr' | 'en';
+
 export class CVGenerator {
   private data: PortfolioData;
+  private language: Language;
   private doc!: PDFDocument;
   private sectionGenerator!: CVSectionGenerator;
 
-  constructor(data: PortfolioData) {
+  constructor(data: PortfolioData, language: Language = 'fr') {
     this.data = data;
+    this.language = language;
   }
 
   async generatePDF(): Promise<void> {
@@ -51,7 +55,8 @@ export class CVGenerator {
       this.doc,
       this.data,
       CV_CONFIG,
-      CV_COLORS
+      CV_COLORS,
+      this.language
     );
   }
 

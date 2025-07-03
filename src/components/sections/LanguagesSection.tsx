@@ -1,13 +1,17 @@
 import React from 'react';
 import { PortfolioData } from '../../types/portfolio';
+import { useLanguage } from '../../contexts/LanguageContext';
 import Section from './Section';
 
 interface LanguagesSectionProps {
   languages: PortfolioData['languages'];
 }
 
-const LanguagesSection: React.FC<LanguagesSectionProps> = ({ languages }) => (
-  <Section title="Langues">
+const LanguagesSection: React.FC<LanguagesSectionProps> = ({ languages }) => {
+  const { t } = useLanguage();
+  
+  return (
+    <Section title={t('languages')}>
     <ul className="space-y-3">
       {languages.map((lang, index) => (
         <li
@@ -19,7 +23,8 @@ const LanguagesSection: React.FC<LanguagesSectionProps> = ({ languages }) => (
         </li>
       ))}
     </ul>
-  </Section>
-);
+    </Section>
+  );
+};
 
 export default LanguagesSection;

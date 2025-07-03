@@ -1,13 +1,17 @@
 import React from 'react';
 import { PortfolioData } from '../../types/portfolio';
+import { useLanguage } from '../../contexts/LanguageContext';
 import Section from './Section';
 
 interface EducationSectionProps {
   education: PortfolioData['education'];
 }
 
-const EducationSection: React.FC<EducationSectionProps> = ({ education }) => (
-  <Section title="Formations">
+const EducationSection: React.FC<EducationSectionProps> = ({ education }) => {
+  const { t } = useLanguage();
+  
+  return (
+    <Section title={t('education')}>
     <div className="space-y-4 sm:space-y-6">
       {education.map((edu, index) => (
         <div key={index} className="border-l-4 border-cyber-cyan pl-4 sm:pl-6 hover:border-primary-green transition-colors duration-300">
@@ -56,7 +60,8 @@ const EducationSection: React.FC<EducationSectionProps> = ({ education }) => (
         </div>
       ))}
     </div>
-  </Section>
-);
+    </Section>
+  );
+};
 
 export default EducationSection;

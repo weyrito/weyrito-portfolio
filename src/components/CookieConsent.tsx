@@ -54,7 +54,7 @@ const CookieConsent: React.FC = () => {
                   </h3>
                   <p className="text-text-white text-sm leading-relaxed">
                     Ce site ne utilise <strong>aucun cookie de tracking</strong> ou de publicité. 
-                    Seules les préférences du terminal sont stockées localement dans votre navigateur 
+                    Seules les préférences utilisateur sont stockées localement dans votre navigateur 
                     pour améliorer votre expérience.
                   </p>
                 </div>
