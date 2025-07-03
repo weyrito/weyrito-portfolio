@@ -25,6 +25,7 @@ export const useLanguage = () => {
 
 export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [language, setLanguage] = useState<Language>('fr');
+  const [isLoaded, setIsLoaded] = useState(false);
 
   // Load language from localStorage on mount
   useEffect(() => {
@@ -32,6 +33,7 @@ export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ chil
     if (savedLanguage && (savedLanguage === 'fr' || savedLanguage === 'en')) {
       setLanguage(savedLanguage);
     }
+    setIsLoaded(true);
   }, []);
 
   // Save language to localStorage when it changes
@@ -68,7 +70,14 @@ export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ chil
         t
       }}
     >
-      {children}
+      {/* Éviter le flash en attendant que la langue soit chargée depuis localStorage */}
+      {isLoaded ? children : (
+        <div className="min-h-screen bg-cyber-darker flex items-center justify-center">
+          <div className="text-primary-green font-orbitron text-xl animate-pulse">
+            Loading...
+          </div>
+        </div>
+      )}
     </LanguageContext.Provider>
   );
 };
